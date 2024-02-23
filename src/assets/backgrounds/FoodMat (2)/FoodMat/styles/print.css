@@ -1,0 +1,72 @@
+@media print {
+    @page {
+        size: 91.44mm 53.34mm;
+        margin: 0.00mm;
+
+        overflow: hidden;
+    }
+
+    #screenbody
+    {
+        display: none;
+        visibility: hidden;
+    }
+    #printbody{
+        display: block;
+        position: relative;
+    }
+    #sellPop{
+        display: none;
+    }
+
+    /* ... the rest of the rules ... */
+
+    #printfront
+    {
+        position: absolute;
+        margin-top: 0px;
+        visibility: visible;
+        display: block;
+    }
+    #printbut {
+        float: right;
+    }
+    .centered{
+        text-align: center;
+        align-content: center;
+    }
+    .rightfloat{
+        text-align: right;
+        float: right;
+    }
+    #printarea{
+        font-family: Arial;
+        font-size: 12px;
+        line-height: 1.2;
+    }
+    h3 {
+        margin: 3px;
+    }
+    .items {
+        width: 100%;
+        margin-top: 10px;
+    }
+    .items td, .items th {
+        padding: .45rem .75rem;
+        vertical-align: top;
+        border-top: 1px solid transparent;
+    }
+    .items thead th {
+        vertical-align: bottom;
+        border-bottom: 1px solid #222428;
+        border-top: 1px solid #222428;
+    }
+    .font-small{
+        font-size: 11px;
+    }
+    .font-bold{
+        font-weight: bold;
+        font-size: 13px;
+    }
+}
+

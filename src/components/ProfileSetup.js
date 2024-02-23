@@ -113,28 +113,28 @@ function ProfileSetup() {
     if (mode === "online") {
     }
     if (mode === "offline") {
-      if (!selectedAvatar) {
-        setErrorMessage("Select player 1 avator");
-        return false;
-      }
-      if (!selectedPlayer2Avatar) {
-        setErrorMessage("Select player 2 avator");
+      if (!selectedGender) {
+        setErrorMessage("Select Player 1's gender");
         return false;
       }
       if (!player1Name) {
         setErrorMessage("Input player 1's name");
         return false;
       }
-      if (!player2Name) {
-        setErrorMessage("Input player 2's name");
-        return false;
-      }
-      if (!selectedGender) {
-        setErrorMessage("Select Player 1's gender");
+      if (!selectedAvatar) {
+        setErrorMessage("Select player 1 avator");
         return false;
       }
       if (!selectedPlayer2Gender) {
         setErrorMessage("Select Player 2's gender");
+        return false;
+      }
+      if (!player2Name) {
+        setErrorMessage("Input player 2's name");
+        return false;
+      }
+      if (!selectedPlayer2Avatar) {
+        setErrorMessage("Select player 2 avator");
         return false;
       }
     }

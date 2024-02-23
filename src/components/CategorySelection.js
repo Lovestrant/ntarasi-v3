@@ -3,7 +3,12 @@ import { Container, Row, Col } from "react-grid-system";
 import { useLocation, useNavigate } from "react-router-dom";
 import { fetchDataFromAPI } from "../shared/Shared";
 import { assetsBackgrounds } from "../configs/configs";
-import lovers from "../assets/backgrounds/lovers.jpeg";
+import engaged1 from "../assets/backgrounds/bg1.jpg";
+import romanceAndFinance from "../assets/backgrounds/lovers.jpeg";
+import betweenTheSheets1 from "../assets/backgrounds/between-sheets.jpg";
+import betweenTheSheets2 from "../assets/backgrounds/sheets2.jpg";
+import engaged2 from "../assets/backgrounds/engaged2.jpg";
+import married from "../assets/backgrounds/bg2.jpg";
 
 function CategorySelection() {
   const [categoryData, setCategoryData] = useState();
@@ -36,6 +41,27 @@ function CategorySelection() {
     });
   };
 
+  const getImageBackground = (img) => {
+    if (img === "bg2.jpg") {
+      return married;
+    }
+    if (img === "engaged2.jpg") {
+      return engaged2;
+    }
+    if (img === "sheets2.jpg") {
+      return betweenTheSheets2;
+    }
+    if (img === "between-sheets.jpg") {
+      return betweenTheSheets1;
+    }
+    if (img === "lovers.jpeg") {
+      return romanceAndFinance;
+    }
+    if (img === "bg1.jpg") {
+      return engaged2;
+    }
+  };
+
   return (
     <div>
       <Container>
@@ -58,7 +84,7 @@ function CategorySelection() {
                     }}
                   >
                     <img
-                      src={lovers}
+                      src={getImageBackground(item.image)}
                       alt={item.image}
                       style={{
                         height: "250px",

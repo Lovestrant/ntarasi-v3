@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Col, Container, Row } from "react-grid-system";
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
 // Import avatar images
 import m1 from "../assets/graphics/m1.png";
@@ -76,13 +76,17 @@ function ProfileSetup() {
   const location = useLocation();
   const { selectedGameMode } = location.state;
   const { uid } = location.state;
+
   const [selectedGender, setSelectedGender] = useState("");
   const [player1Name, setPlayer1Name] = useState("");
-  const [selectedAvatar, setSelectedAvatar] = useState(null);
+  const [selectedAvatar, setSelectedAvatar] = useState("");
 
   const [selectedPlayer2Gender, setSelectedPlayer2Gender] = useState("");
   const [player2Name, setPlayer2Name] = useState("");
-  const [selectedPlayer2Avatar, setSelectedPlayer2Avatar] = useState(null);
+  const [selectedPlayer2Avatar, setSelectedPlayer2Avatar] = useState("");
+
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handlegenderSelectedChange = (event) => {
     setSelectedGender(event.target.value);
@@ -103,6 +107,68 @@ function ProfileSetup() {
   };
   const handlePlayer2AvatarSelect = (avatar) => {
     setSelectedPlayer2Avatar(avatar);
+  };
+
+  const validateProfiles = (mode) => {
+    if (mode === "online") {
+    }
+    if (mode === "offline") {
+      if (!selectedAvatar) {
+        setErrorMessage("Select player 1 avator");
+        return false;
+      }
+      if (!selectedPlayer2Avatar) {
+        setErrorMessage("Select player 2 avator");
+        return false;
+      }
+      if (!player1Name) {
+        setErrorMessage("Input player 1's name");
+        return false;
+      }
+      if (!player2Name) {
+        setErrorMessage("Input player 2's name");
+        return false;
+      }
+      if (!selectedGender) {
+        setErrorMessage("Select Player 1's gender");
+        return false;
+      }
+      if (!selectedPlayer2Gender) {
+        setErrorMessage("Select Player 2's gender");
+        return false;
+      }
+    }
+    setErrorMessage("");
+    return true;
+  };
+
+  const navigate = useNavigate();
+
+  const handleStartPlay = () => {
+    const valid = validateProfiles(selectedGameMode);
+    if (valid) {
+      if (selectedGameMode === "online") {
+      } else {
+        let playerOneData = [selectedGender, player1Name, selectedAvatar];
+        let playerTwoData = {
+          selectedPlayer2Gender,
+          player2Name,
+          selectedPlayer2Avatar,
+        };
+        navigate("/PlayGround", {
+          state: {
+            selectedGameMode: selectedGameMode,
+            uid: uid,
+            playerOneGender: selectedGender,
+            playerOneName: player1Name,
+            playerOneAvator: selectedAvatar,
+            playerTwoGender: selectedPlayer2Gender,
+            playerTwoName: player2Name,
+            playerTwoAvator: selectedPlayer2Avatar,
+          },
+        });
+      }
+    }
   };
 
   const avatorStyle = {
@@ -226,7 +292,7 @@ function ProfileSetup() {
                             src={avatar}
                             alt={`Avatar ${index + 1}`}
                             className={
-                              selectedAvatar === avatar ? "selected" : ""
+                              selectedPlayer2Avatar === avatar ? "selected" : ""
                             }
                             onClick={() => handlePlayer2AvatarSelect(avatar)}
                           />
@@ -239,7 +305,7 @@ function ProfileSetup() {
                             src={avatar}
                             alt={`Avatar ${index + 1}`}
                             className={
-                              selectedAvatar === avatar ? "selected" : ""
+                              selectedPlayer2Avatar === avatar ? "selected" : ""
                             }
                             onClick={() => handlePlayer2AvatarSelect(avatar)}
                           />
@@ -253,7 +319,7 @@ function ProfileSetup() {
                             src={avatar}
                             alt={`Avatar ${index + 1}`}
                             className={
-                              selectedAvatar === avatar ? "selected" : ""
+                              selectedPlayer2Avatar === avatar ? "selected" : ""
                             }
                             onClick={() => handlePlayer2AvatarSelect(avatar)}
                           />
@@ -266,7 +332,7 @@ function ProfileSetup() {
                             src={avatar}
                             alt={`Avatar ${index + 1}`}
                             className={
-                              selectedAvatar === avatar ? "selected" : ""
+                              selectedPlayer2Avatar === avatar ? "selected" : ""
                             }
                             onClick={() => handlePlayer2AvatarSelect(avatar)}
                           />
@@ -276,12 +342,15 @@ function ProfileSetup() {
                 </Row>
                 <Row>
                   <Col sm={12}>
+                    <h4 style={{ color: "red" }}>{errorMessage}</h4>
+                    <h4 style={{ color: "green" }}>{successMessage}</h4>
                     <button
                       style={{
                         height: 60,
                         marginTop: 20,
                         backgroundColor: "rgb(81,180,8)",
                       }}
+                      onClick={() => handleStartPlay()}
                     >
                       Start GamePlay
                     </button>
@@ -371,12 +440,15 @@ function ProfileSetup() {
                 </Col>
                 <Row>
                   <Col sm={12}>
+                    <h4 style={{ color: "red" }}>{errorMessage}</h4>
+                    <h4 style={{ color: "green" }}>{successMessage}</h4>
                     <button
                       style={{
                         height: 60,
                         marginTop: 20,
                         backgroundColor: "rgb(81,180,8)",
                       }}
+                      onClick={() => handleStartPlay()}
                     >
                       Start GamePlay
                     </button>

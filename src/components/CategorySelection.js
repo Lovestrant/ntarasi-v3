@@ -31,7 +31,6 @@ function CategorySelection() {
   const navigate = useNavigate();
 
   const handleClick = (uid) => {
-    console.log("hello... click active");
     navigate("/profileSetup", {
       state: { selectedGameMode: selectedGameMode, uid: uid },
     });

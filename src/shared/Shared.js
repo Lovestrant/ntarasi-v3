@@ -25,3 +25,26 @@ export const fetchDataFromAPI = async (endpoint, requestData) => {
     throw error;
   }
 };
+
+export const postDataToAPI = async (endpoint, formData) => {
+  try {
+    const response = await fetch(server + endpoint, {
+      method: "POST",
+      // Remove Content-Type header for formData
+      body: formData,
+    });
+
+    console.log("Form data", formData);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
+    console.log("Response...", data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    // Handle error or throw it to be caught by the caller
+    throw error;
+  }
+};

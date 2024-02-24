@@ -111,6 +111,19 @@ function ProfileSetup() {
 
   const validateProfiles = (mode) => {
     if (mode === "online") {
+      if (!selectedGender) {
+        setErrorMessage("Select Player 1's gender");
+        return false;
+      }
+      if (!player1Name) {
+        setErrorMessage("Input player 1's name");
+        return false;
+      }
+      if (!selectedAvatar) {
+        setErrorMessage("Select player 1 avator");
+        return false;
+      }
+      return true;
     }
     if (mode === "offline") {
       if (!selectedGender) {
@@ -148,13 +161,16 @@ function ProfileSetup() {
     const valid = validateProfiles(selectedGameMode);
     if (valid) {
       if (selectedGameMode === "online") {
+        navigate("/SendInvite", {
+          state: {
+            selectedGameMode: selectedGameMode,
+            uid: uid,
+            playerOneGender: selectedGender,
+            playerOneName: player1Name,
+            playerOneAvator: selectedAvatar,
+          },
+        });
       } else {
-        let playerOneData = [selectedGender, player1Name, selectedAvatar];
-        let playerTwoData = {
-          selectedPlayer2Gender,
-          player2Name,
-          selectedPlayer2Avatar,
-        };
         navigate("/PlayGround", {
           state: {
             selectedGameMode: selectedGameMode,

@@ -155,12 +155,22 @@ function ProfileSetup() {
     return true;
   };
 
-  const navigate = useNavigate();
+  const generateRandomAlphaNum = (length) => {
+    var chars =
+      "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var result = "";
+    for (var i = length; i > 0; --i)
+      result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
+  };
 
+  const navigate = useNavigate();
   const handleStartPlay = () => {
     const valid = validateProfiles(selectedGameMode);
     if (valid) {
       if (selectedGameMode === "online") {
+        const theInviteCode = generateRandomAlphaNum(5);
+
         navigate("/SendInvite", {
           state: {
             selectedGameMode: selectedGameMode,
@@ -168,6 +178,7 @@ function ProfileSetup() {
             playerOneGender: selectedGender,
             playerOneName: player1Name,
             playerOneAvator: selectedAvatar,
+            createdInviteCode: theInviteCode,
           },
         });
       } else {

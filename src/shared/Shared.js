@@ -34,7 +34,9 @@ export const postDataToAPI = async (endpoint, formData) => {
       body: formData,
     });
 
-    console.log("Form data", formData);
+    for (const pair of formData.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }

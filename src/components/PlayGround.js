@@ -16,6 +16,7 @@ function PlayGround() {
   const [cards, setCards] = useState([]);
   const [viewedCards, setViewedCards] = useState([]);
   const [cardsCount, setCardsCount] = useState(0);
+  console.log("Selected GameMode:::", selectedGameMode);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,10 +41,14 @@ function PlayGround() {
   }, []);
 
   const handlePlayClick = () => {
-    const newCard = cards[cardsCount];
-    if (newCard) {
-      setViewedCards((viewedCards) => [...viewedCards, newCard]);
-      setCardsCount(cardsCount + 1);
+    if (selectedGameMode === "online") {
+      console.log("Ready to get started....");
+    } else {
+      const newCard = cards[cardsCount];
+      if (newCard) {
+        setViewedCards((viewedCards) => [...viewedCards, newCard]);
+        setCardsCount(cardsCount + 1);
+      }
     }
   };
 

@@ -10,9 +10,10 @@ function SendInvite() {
   const location = useLocation();
   const { selectedGameMode } = location.state;
   const { uid } = location.state;
-  const { playerOneGender, playerOneName, playerOneAvator } = location.state;
+  const { playerOneGender, playerOneName, playerOneAvator, createdInviteCode } =
+    location.state;
   const [responseData, setResponseData] = useState("");
-  const [inviteCode, setInviteCode] = useState("");
+  const [inviteCode, setInviteCode] = useState(createdInviteCode);
   const [successMessage, setSuccessMessage] = useState();
 
   const playerOneData = {
@@ -23,22 +24,10 @@ function SendInvite() {
     },
   };
 
-  const generateRandomAlphaNum = (length) => {
-    var chars =
-      "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    var result = "";
-    for (var i = length; i > 0; --i)
-      result += chars[Math.floor(Math.random() * chars.length)];
-    return result;
-  };
-
   //UseEffect to generate Invite and save the invite on mounting
   useEffect(() => {
-    const theInviteCode = generateRandomAlphaNum(5);
-    setInviteCode(theInviteCode);
-
     const formData = new FormData();
-    formData.append("rand", theInviteCode);
+    formData.append("rand", inviteCode);
     formData.append("player1", JSON.stringify(playerOneData));
     formData.append("deck", uid);
 
@@ -70,9 +59,9 @@ function SendInvite() {
         );
         if (response.result_ === 1) {
           console.log("Accepted...");
-          const player2Name = response.result_.profile.Name;
-          const player2Gender = response.result_.profile.Gender;
-          const player2Avatar = response.result_.profile.Avatar;
+          const player2Name = response.details_.profile.Name;
+          const player2Gender = response.details_.profile.Gender;
+          const player2Avatar = response.details_.profile.Avatar;
 
           navigate("/PlayGround", {
             state: {

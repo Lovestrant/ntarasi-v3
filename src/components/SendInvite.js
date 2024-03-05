@@ -73,6 +73,8 @@ function SendInvite() {
               playerTwoGender: player2Gender,
               playerTwoName: player2Name,
               playerTwoAvator: player2Avatar,
+              inviteCode: inviteCode,
+              playerNumber: 1,
             },
           });
         } else {

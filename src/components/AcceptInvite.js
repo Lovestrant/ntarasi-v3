@@ -191,6 +191,8 @@ function AcceptInvite() {
                 playerTwoGender: selectedGender,
                 playerTwoName: player2Name,
                 playerTwoAvator: selectedAvatar,
+                inviteCode: inviteCode,
+                playerNumber: 2,
               },
             });
           }

@@ -144,6 +144,7 @@ function AcceptInvite() {
           setPlayerOneName(response.details_.profile.Name);
           setPlayerOneGender(response.details_.profile.Gender);
           setPlayerOneAvator(response.details_.profile.Avatar);
+          setDeck(response.deck_);
         } else {
           console.log("Invalid response format or missing profile data");
         }

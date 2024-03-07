@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-grid-system";
 import { useLocation } from "react-router-dom";
 import { fetchDataFromAPI, postDataToAPI } from "../shared/Shared";
+import backgroundPhoto from "../assets/backgrounds/b3.jpg";
 
 function PlayGround() {
   const location = useLocation();
@@ -27,6 +28,7 @@ function PlayGround() {
   const [myTurn, setMyTurn] = useState(false);
   const [timeoutId, setTimeoutId] = useState(null);
   const [messageFeedback, setMessageFeedback] = useState([]);
+  const [currentMessageNumber, setCurrentMessageNumber] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,15 +55,20 @@ function PlayGround() {
 
   //Set one Card to ViewedCards on Initial Reload
   useEffect(() => {
-    if (cards.length > 0 && viewedCards.length < 1) {
-      const initialCard = cards[0];
-      setViewedCards((viewedCards) => [...viewedCards, initialCard]);
+    if (currentMessageNumber && viewedCards.length === 0) {
+      if (cards.length > 0) {
+        let i;
+        for (i = 0; i <= currentMessageNumber; i++) {
+          const initialCard = cards[i];
+          setViewedCards((viewedCards) => [...viewedCards, initialCard]);
+        }
+      }
     }
-  }, [cards]);
+  }, [currentMessageNumber]);
 
   //check Player status
   useEffect(() => {
-    if (!inviteCode) {
+    if (!inviteCode && selectedGameMode !== "online") {
       return;
     }
 
@@ -84,7 +91,7 @@ function PlayGround() {
         if (response) {
           const details = JSON.parse(response.details_)[0];
           setTurn(details ? parseInt(details.turn) : null);
-          //setCardsCount(details ? parseInt(details.card) : null);
+          setCurrentMessageNumber(details ? parseInt(details.card) : null);
           setMyTurn(details && parseInt(details.turn) === playerNumber);
         }
       } catch (error) {
@@ -106,7 +113,7 @@ function PlayGround() {
 
   //Fetch Messages
   useEffect(() => {
-    if (!inviteCode) {
+    if (!inviteCode && selectedGameMode !== "online") {
       return;
     }
 
@@ -159,7 +166,6 @@ function PlayGround() {
 
   //send new message
   const sendMessage = async (message) => {
-    //send message
     if (message !== "" && message != null) {
       const formData = new FormData();
       formData.append("session_id", inviteCode);
@@ -207,7 +213,6 @@ function PlayGround() {
   const handlePlayClick = async () => {
     //update status -> to be called in function after user palyed
     if (selectedGameMode === "online") {
-      console.log("Ready to get started....");
       const formData = new FormData();
       formData.append("local_player", playerNumber);
       formData.append("sessionid", inviteCode);
@@ -241,6 +246,7 @@ function PlayGround() {
       const newCard = cards[cardsCount];
       if (newCard) {
         setViewedCards((viewedCards) => [...viewedCards, newCard]);
+        setCurrentMessageNumber(cardsCount);
         setCardsCount(cardsCount + 1);
       }
     }
@@ -250,9 +256,9 @@ function PlayGround() {
     setTypedText(event.target.value);
   };
   return (
-    <div>
+    <div style={{ backgroundImage: `url(${backgroundPhoto})` }}>
       <Container>
-        <Row>
+        <Row style={{ backgroundColor: "whitesmoke" }}>
           <Col sm={12}>
             <Col
               lg={12}

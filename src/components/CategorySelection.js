@@ -9,6 +9,7 @@ import betweenTheSheets1 from "../assets/backgrounds/between-sheets.jpg";
 import betweenTheSheets2 from "../assets/backgrounds/sheets2.jpg";
 import engaged2 from "../assets/backgrounds/engaged2.jpg";
 import married from "../assets/backgrounds/bg2.jpg";
+import backPhoto from "../assets/graphics/back.jpg";
 
 function CategorySelection() {
   const [categoryData, setCategoryData] = useState();
@@ -63,24 +64,31 @@ function CategorySelection() {
   };
 
   return (
-    <div>
+    <div style={{ backgroundImage: `url(${backPhoto})` }}>
       <Container>
         <Row>
           <Col sm={12}>
             <h1>SELECT CATEGORY</h1>
             {categoryData && (
-              <div>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  justifyContent: "space-between",
+                }}
+              >
                 {categoryData.details_.map((item) => (
                   <div
                     key={item.uid}
                     onClick={() => handleClick(item.uid)}
                     style={{
                       marginBottom: 30,
-                      width: "auto",
+                      width: "calc(50% - 20px)", // Adjust width for two columns
                       textAlign: "center",
                       justifyContent: "center",
                       border: "1px solid black",
                       padding: 3,
+                      boxSizing: "border-box", // Ensure padding and border are included in the width calculation
                     }}
                   >
                     <img
@@ -88,7 +96,7 @@ function CategorySelection() {
                       alt={item.image}
                       style={{
                         height: "250px",
-                        width: "200px",
+                        width: "100%", // Ensure image fills the container
                         borderRadius: "10px",
                       }}
                     />

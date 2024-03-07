@@ -4,11 +4,12 @@ import couples from "../assets/graphics/couple.png";
 import smartphone from "../assets/graphics/smartphone.png";
 import back from "../assets/graphics/back.jpg";
 import { Link, useNavigate } from "react-router-dom";
+import backPhoto from "../assets/graphics/back.jpg";
 
 function GameModeChoice() {
   const backgroundStyle = {
+    backgroundImage: `url(${backPhoto})`,
     display: "flex",
-    backgroundImage: back,
     backgroundSize: "cover",
     justifyContent: "center",
     height: "100vh",
@@ -26,7 +27,9 @@ function GameModeChoice() {
     padding: 10,
     borderRadius: 10,
   };
-
+  const imgStyle = {
+    height: "200px",
+  };
   const navigate = useNavigate();
   const handleClick = (mode) => {
     navigate("/CategorySelection", { state: { selectedGameMode: mode } });
@@ -41,8 +44,8 @@ function GameModeChoice() {
               style={btnOfflineStyle}
               onClick={() => handleClick("offline")}
             >
-              <img src={couples} alt="couples" />
-              <p style={{ color: "white" }}>PLAY TOGETHER ON THIS GADGET</p>
+              <img src={couples} alt="couples" style={imgStyle} />
+              <p style={{ color: "white" }}>PLAY ON THIS GADGET</p>
             </button>
           </Col>
           <Col sm={6}>
@@ -50,7 +53,7 @@ function GameModeChoice() {
               style={btnOnlineStyle}
               onClick={() => handleClick("online")}
             >
-              <img src={smartphone} alt="smartphone" />
+              <img src={smartphone} alt="smartphone" style={imgStyle} />
               <p style={{ color: "white" }}>PLAY WITH PARTNER ONLINE</p>
             </button>
           </Col>

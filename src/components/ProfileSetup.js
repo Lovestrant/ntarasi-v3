@@ -34,6 +34,7 @@ import w12 from "../assets/graphics/w12.png";
 import w13 from "../assets/graphics/w13.png";
 import w14 from "../assets/graphics/w14.png";
 import w15 from "../assets/graphics/w15.png";
+import backPhoto from "../assets/graphics/back.jpg";
 
 // Store the imported image paths in an array
 const maleAvatars = [
@@ -201,8 +202,19 @@ function ProfileSetup() {
   const avatorStyle = {
     width: 50,
   };
+  const styledAvator = {
+    background: "grey",
+    width: 50,
+    borderRadius: 20,
+  };
+  const inputTextStyle = { width: "250px", height: "30px" };
+  const playerGenderStyle = {
+    width: "259px",
+    height: "30px",
+    marginBottom: 10,
+  };
   return (
-    <div>
+    <div style={{ backgroundImage: `url(${backPhoto})`, height: "100vh" }}>
       <Container>
         <h3>Set Your Profile</h3>
         <Row>
@@ -215,16 +227,18 @@ function ProfileSetup() {
                     <select
                       value={selectedGender}
                       onChange={handlegenderSelectedChange}
+                      style={playerGenderStyle}
                     >
-                      <option value="">Select an option...</option>
+                      <option value="">Select gender option.</option>
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
                       <option value="Other">Other</option>
                     </select>
                     <br></br>
                     <label>
-                      Name:
                       <input
+                        style={inputTextStyle}
+                        placeholder="Input Player 1 Name"
                         type="text"
                         value={player1Name}
                         onChange={handlePlayer1NameChange}
@@ -235,56 +249,120 @@ function ProfileSetup() {
                     <div className="avatar-grid">
                       {selectedGender === "Male" &&
                         maleAvatars.map((avatar, index) => (
-                          <img
-                            style={avatorStyle}
-                            key={index}
-                            src={avatar}
-                            alt={`Avatar ${index + 1}`}
-                            className={
-                              selectedAvatar === avatar ? "selected" : ""
-                            }
-                            onClick={() => handleAvatarSelect(avatar)}
-                          />
+                          <>
+                            {selectedAvatar === avatar && (
+                              <img
+                                style={styledAvator}
+                                key={index}
+                                src={avatar}
+                                alt={`Avatar ${index + 1}`}
+                                className={
+                                  selectedAvatar === avatar ? "selected" : ""
+                                }
+                                onClick={() => handleAvatarSelect(avatar)}
+                              />
+                            )}
+                            {selectedAvatar !== avatar && (
+                              <img
+                                style={avatorStyle}
+                                key={index}
+                                src={avatar}
+                                alt={`Avatar ${index + 1}`}
+                                className={
+                                  selectedAvatar === avatar ? "selected" : ""
+                                }
+                                onClick={() => handleAvatarSelect(avatar)}
+                              />
+                            )}
+                          </>
                         ))}
                       {selectedGender === "Female" &&
                         femaleAvatars.map((avatar, index) => (
-                          <img
-                            style={avatorStyle}
-                            key={index}
-                            src={avatar}
-                            alt={`Avatar ${index + 1}`}
-                            className={
-                              selectedAvatar === avatar ? "selected" : ""
-                            }
-                            onClick={() => handleAvatarSelect(avatar)}
-                          />
+                          <>
+                            {selectedAvatar === avatar && (
+                              <img
+                                style={styledAvator}
+                                key={index}
+                                src={avatar}
+                                alt={`Avatar ${index + 1}`}
+                                className={
+                                  selectedAvatar === avatar ? "selected" : ""
+                                }
+                                onClick={() => handleAvatarSelect(avatar)}
+                              />
+                            )}
+                            {selectedAvatar !== avatar && (
+                              <img
+                                style={avatorStyle}
+                                key={index}
+                                src={avatar}
+                                alt={`Avatar ${index + 1}`}
+                                className={
+                                  selectedAvatar === avatar ? "selected" : ""
+                                }
+                                onClick={() => handleAvatarSelect(avatar)}
+                              />
+                            )}
+                          </>
                         ))}
 
                       {selectedGender === "" &&
                         allAvators.map((avatar, index) => (
-                          <img
-                            style={avatorStyle}
-                            key={index}
-                            src={avatar}
-                            alt={`Avatar ${index + 1}`}
-                            className={
-                              selectedAvatar === avatar ? "selected" : ""
-                            }
-                            onClick={() => handleAvatarSelect(avatar)}
-                          />
+                          <>
+                            {selectedAvatar === avatar && (
+                              <img
+                                style={styledAvator}
+                                key={index}
+                                src={avatar}
+                                alt={`Avatar ${index + 1}`}
+                                className={
+                                  selectedAvatar === avatar ? "selected" : ""
+                                }
+                                onClick={() => handleAvatarSelect(avatar)}
+                              />
+                            )}
+                            {selectedAvatar !== avatar && (
+                              <img
+                                style={avatorStyle}
+                                key={index}
+                                src={avatar}
+                                alt={`Avatar ${index + 1}`}
+                                className={
+                                  selectedAvatar === avatar ? "selected" : ""
+                                }
+                                onClick={() => handleAvatarSelect(avatar)}
+                              />
+                            )}
+                          </>
                         ))}
                       {selectedGender === "Other" &&
                         allAvators.map((avatar, index) => (
-                          <img
-                            style={avatorStyle}
-                            key={index}
-                            src={avatar}
-                            alt={`Avatar ${index + 1}`}
-                            className={
-                              selectedAvatar === avatar ? "selected" : ""
-                            }
-                            onClick={() => handleAvatarSelect(avatar)}
-                          />
+                          <>
+                            {selectedAvatar === avatar && (
+                              <img
+                                style={styledAvator}
+                                key={index}
+                                src={avatar}
+                                alt={`Avatar ${index + 1}`}
+                                className={
+                                  selectedAvatar === avatar ? "selected" : ""
+                                }
+                                onClick={() => handleAvatarSelect(avatar)}
+                              />
+                            )}
+                            {selectedAvatar !== avatar && (
+                              <img
+                                style={avatorStyle}
+                                key={index}
+                                src={avatar}
+                                alt={`Avatar ${index + 1}`}
+                                className={
+                                  selectedAvatar === avatar ? "selected" : ""
+                                }
+                                onClick={() => handleAvatarSelect(avatar)}
+                              />
+                            )}
+                          </>
                         ))}
                     </div>
                   </Col>
@@ -293,16 +371,18 @@ function ProfileSetup() {
                     <select
                       value={selectedPlayer2Gender}
                       onChange={handlePlayer2GenderSelectedChange}
+                      style={playerGenderStyle}
                     >
-                      <option value="">Select an option...</option>
+                      <option value="">Select gender option.</option>
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
                       <option value="Other">Other</option>
                     </select>
                     <br></br>
                     <label>
-                      Name:
                       <input
+                        placeholder="Input Player 2 Name"
+                        style={inputTextStyle}
                         type="text"
                         value={player2Name}
                         onChange={handlePlayer2NameChange}
@@ -313,56 +393,152 @@ function ProfileSetup() {
                     <div className="avatar-grid">
                       {selectedPlayer2Gender === "Male" &&
                         maleAvatars.map((avatar, index) => (
-                          <img
-                            style={avatorStyle}
-                            key={index}
-                            src={avatar}
-                            alt={`Avatar ${index + 1}`}
-                            className={
-                              selectedPlayer2Avatar === avatar ? "selected" : ""
-                            }
-                            onClick={() => handlePlayer2AvatarSelect(avatar)}
-                          />
+                          <>
+                            {selectedPlayer2Avatar === avatar && (
+                              <img
+                                style={styledAvator}
+                                key={index}
+                                src={avatar}
+                                alt={`Avatar ${index + 1}`}
+                                className={
+                                  selectedPlayer2Avatar === avatar
+                                    ? "selected"
+                                    : ""
+                                }
+                                onClick={() =>
+                                  handlePlayer2AvatarSelect(avatar)
+                                }
+                              />
+                            )}
+                            {selectedPlayer2Avatar !== avatar && (
+                              <img
+                                style={avatorStyle}
+                                key={index}
+                                src={avatar}
+                                alt={`Avatar ${index + 1}`}
+                                className={
+                                  selectedPlayer2Avatar === avatar
+                                    ? "selected"
+                                    : ""
+                                }
+                                onClick={() =>
+                                  handlePlayer2AvatarSelect(avatar)
+                                }
+                              />
+                            )}
+                          </>
                         ))}
                       {selectedPlayer2Gender === "Female" &&
                         femaleAvatars.map((avatar, index) => (
-                          <img
-                            style={avatorStyle}
-                            key={index}
-                            src={avatar}
-                            alt={`Avatar ${index + 1}`}
-                            className={
-                              selectedPlayer2Avatar === avatar ? "selected" : ""
-                            }
-                            onClick={() => handlePlayer2AvatarSelect(avatar)}
-                          />
+                          <>
+                            {selectedPlayer2Avatar === avatar && (
+                              <img
+                                style={styledAvator}
+                                key={index}
+                                src={avatar}
+                                alt={`Avatar ${index + 1}`}
+                                className={
+                                  selectedPlayer2Avatar === avatar
+                                    ? "selected"
+                                    : ""
+                                }
+                                onClick={() =>
+                                  handlePlayer2AvatarSelect(avatar)
+                                }
+                              />
+                            )}
+                            {selectedPlayer2Avatar !== avatar && (
+                              <img
+                                style={avatorStyle}
+                                key={index}
+                                src={avatar}
+                                alt={`Avatar ${index + 1}`}
+                                className={
+                                  selectedPlayer2Avatar === avatar
+                                    ? "selected"
+                                    : ""
+                                }
+                                onClick={() =>
+                                  handlePlayer2AvatarSelect(avatar)
+                                }
+                              />
+                            )}
+                          </>
                         ))}
 
                       {selectedPlayer2Gender === "" &&
                         allAvators.map((avatar, index) => (
-                          <img
-                            style={avatorStyle}
-                            key={index}
-                            src={avatar}
-                            alt={`Avatar ${index + 1}`}
-                            className={
-                              selectedPlayer2Avatar === avatar ? "selected" : ""
-                            }
-                            onClick={() => handlePlayer2AvatarSelect(avatar)}
-                          />
+                          <>
+                            {selectedPlayer2Avatar === avatar && (
+                              <img
+                                style={styledAvator}
+                                key={index}
+                                src={avatar}
+                                alt={`Avatar ${index + 1}`}
+                                className={
+                                  selectedPlayer2Avatar === avatar
+                                    ? "selected"
+                                    : ""
+                                }
+                                onClick={() =>
+                                  handlePlayer2AvatarSelect(avatar)
+                                }
+                              />
+                            )}
+                            {selectedPlayer2Avatar !== avatar && (
+                              <img
+                                style={avatorStyle}
+                                key={index}
+                                src={avatar}
+                                alt={`Avatar ${index + 1}`}
+                                className={
+                                  selectedPlayer2Avatar === avatar
+                                    ? "selected"
+                                    : ""
+                                }
+                                onClick={() =>
+                                  handlePlayer2AvatarSelect(avatar)
+                                }
+                              />
+                            )}
+                          </>
                         ))}
                       {selectedPlayer2Gender === "Other" &&
                         allAvators.map((avatar, index) => (
-                          <img
-                            style={avatorStyle}
-                            key={index}
-                            src={avatar}
-                            alt={`Avatar ${index + 1}`}
-                            className={
-                              selectedPlayer2Avatar === avatar ? "selected" : ""
-                            }
-                            onClick={() => handlePlayer2AvatarSelect(avatar)}
-                          />
+                          <>
+                            {selectedPlayer2Avatar === avatar && (
+                              <img
+                                style={styledAvator}
+                                key={index}
+                                src={avatar}
+                                alt={`Avatar ${index + 1}`}
+                                className={
+                                  selectedPlayer2Avatar === avatar
+                                    ? "selected"
+                                    : ""
+                                }
+                                onClick={() =>
+                                  handlePlayer2AvatarSelect(avatar)
+                                }
+                              />
+                            )}
+                            {selectedPlayer2Avatar !== avatar && (
+                              <img
+                                style={avatorStyle}
+                                key={index}
+                                src={avatar}
+                                alt={`Avatar ${index + 1}`}
+                                className={
+                                  selectedPlayer2Avatar === avatar
+                                    ? "selected"
+                                    : ""
+                                }
+                                onClick={() =>
+                                  handlePlayer2AvatarSelect(avatar)
+                                }
+                              />
+                            )}
+                          </>
                         ))}
                     </div>
                   </Col>
@@ -390,6 +566,7 @@ function ProfileSetup() {
                 <Col sm={12}>
                   <h4>Player 1</h4>
                   <select
+                    style={playerGenderStyle}
                     value={selectedGender}
                     onChange={handlegenderSelectedChange}
                   >
@@ -400,8 +577,9 @@ function ProfileSetup() {
                   </select>
                   <br></br>
                   <label>
-                    Name:
                     <input
+                      style={inputTextStyle}
+                      placeholder="Set Your Name"
                       type="text"
                       value={player1Name}
                       onChange={handlePlayer1NameChange}
@@ -412,75 +590,154 @@ function ProfileSetup() {
                   <div className="avatar-grid">
                     {selectedGender === "Male" &&
                       maleAvatars.map((avatar, index) => (
-                        <img
-                          style={avatorStyle}
-                          key={index}
-                          src={avatar}
-                          alt={`Avatar ${index + 1}`}
-                          className={
-                            selectedAvatar === avatar ? "selected" : ""
-                          }
-                          onClick={() => handleAvatarSelect(avatar)}
-                        />
+                        <>
+                          {selectedAvatar === avatar && (
+                            <img
+                              style={styledAvator}
+                              key={index}
+                              src={avatar}
+                              alt={`Avatar ${index + 1}`}
+                              className={
+                                selectedAvatar === avatar ? "selected" : ""
+                              }
+                              onClick={() => handleAvatarSelect(avatar)}
+                            />
+                          )}
+                          {selectedAvatar !== avatar && (
+                            <img
+                              style={avatorStyle}
+                              key={index}
+                              src={avatar}
+                              alt={`Avatar ${index + 1}`}
+                              className={
+                                selectedAvatar === avatar ? "selected" : ""
+                              }
+                              onClick={() => handleAvatarSelect(avatar)}
+                            />
+                          )}
+                        </>
                       ))}
                     {selectedGender === "Female" &&
                       femaleAvatars.map((avatar, index) => (
-                        <img
-                          style={avatorStyle}
-                          key={index}
-                          src={avatar}
-                          alt={`Avatar ${index + 1}`}
-                          className={
-                            selectedAvatar === avatar ? "selected" : ""
-                          }
-                          onClick={() => handleAvatarSelect(avatar)}
-                        />
+                        <>
+                          {selectedAvatar === avatar && (
+                            <img
+                              style={styledAvator}
+                              key={index}
+                              src={avatar}
+                              alt={`Avatar ${index + 1}`}
+                              className={
+                                selectedAvatar === avatar ? "selected" : ""
+                              }
+                              onClick={() => handleAvatarSelect(avatar)}
+                            />
+                          )}
+                          {selectedAvatar !== avatar && (
+                            <img
+                              style={avatorStyle}
+                              key={index}
+                              src={avatar}
+                              alt={`Avatar ${index + 1}`}
+                              className={
+                                selectedAvatar === avatar ? "selected" : ""
+                              }
+                              onClick={() => handleAvatarSelect(avatar)}
+                            />
+                          )}
+                        </>
                       ))}
 
                     {selectedGender === "" &&
                       allAvators.map((avatar, index) => (
-                        <img
-                          style={avatorStyle}
-                          key={index}
-                          src={avatar}
-                          alt={`Avatar ${index + 1}`}
-                          className={
-                            selectedAvatar === avatar ? "selected" : ""
-                          }
-                          onClick={() => handleAvatarSelect(avatar)}
-                        />
+                        <>
+                          {selectedAvatar === avatar && (
+                            <img
+                              style={styledAvator}
+                              key={index}
+                              src={avatar}
+                              alt={`Avatar ${index + 1}`}
+                              className={
+                                selectedAvatar === avatar ? "selected" : ""
+                              }
+                              onClick={() => handleAvatarSelect(avatar)}
+                            />
+                          )}
+                          {selectedAvatar !== avatar && (
+                            <img
+                              style={avatorStyle}
+                              key={index}
+                              src={avatar}
+                              alt={`Avatar ${index + 1}`}
+                              className={
+                                selectedAvatar === avatar ? "selected" : ""
+                              }
+                              onClick={() => handleAvatarSelect(avatar)}
+                            />
+                          )}
+                        </>
                       ))}
                     {selectedGender === "Other" &&
                       allAvators.map((avatar, index) => (
-                        <img
-                          style={avatorStyle}
-                          key={index}
-                          src={avatar}
-                          alt={`Avatar ${index + 1}`}
-                          className={
-                            selectedAvatar === avatar ? "selected" : ""
-                          }
-                          onClick={() => handleAvatarSelect(avatar)}
-                        />
+                        <>
+                          {selectedAvatar === avatar && (
+                            <img
+                              style={styledAvator}
+                              key={index}
+                              src={avatar}
+                              alt={`Avatar ${index + 1}`}
+                              className={
+                                selectedAvatar === avatar ? "selected" : ""
+                              }
+                              onClick={() => handleAvatarSelect(avatar)}
+                            />
+                          )}
+                          {selectedAvatar !== avatar && (
+                            <img
+                              style={avatorStyle}
+                              key={index}
+                              src={avatar}
+                              alt={`Avatar ${index + 1}`}
+                              className={
+                                selectedAvatar === avatar ? "selected" : ""
+                              }
+                              onClick={() => handleAvatarSelect(avatar)}
+                            />
+                          )}
+                        </>
                       ))}
                   </div>
-                </Col>
-                <Row>
-                  <Col sm={12}>
-                    <h4 style={{ color: "red" }}>{errorMessage}</h4>
-                    <h4 style={{ color: "green" }}>{successMessage}</h4>
-                    <button
+                  <Row>
+                    <Col
+                      sm={12}
                       style={{
-                        height: 60,
-                        marginTop: 20,
-                        backgroundColor: "rgb(81,180,8)",
+                        display: "flex",
+                        flexDirection: "column",
+                        height: "38vh", // Make sure the column fills the entire height of the viewport
                       }}
-                      onClick={() => handleStartPlay()}
                     >
-                      Start GamePlay
-                    </button>
-                  </Col>
-                </Row>
+                      <div
+                        style={{
+                          textAlign: "center",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <h4 style={{ color: "red" }}>{errorMessage}</h4>
+                        <h4 style={{ color: "green" }}>{successMessage}</h4>
+                        <button
+                          style={{
+                            height: 60,
+                            marginTop: 20,
+                            backgroundColor: "rgb(81,180,8)",
+                          }}
+                          onClick={() => handleStartPlay()}
+                        >
+                          Start GamePlay
+                        </button>
+                      </div>
+                    </Col>
+                  </Row>
+                </Col>
               </Row>
             )}
           </Col>

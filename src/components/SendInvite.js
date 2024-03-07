@@ -5,6 +5,7 @@ import { inviteUrl, server } from "../configs/configs";
 import { toast } from "react-toastify";
 import { Col, Container, Row } from "react-grid-system";
 import whatsappImg from "../assets/graphics/whatsapp.png";
+import backPhoto from "../assets/graphics/back.jpg";
 
 function SendInvite() {
   const location = useLocation();
@@ -104,24 +105,28 @@ function SendInvite() {
     }
   };
 
+  const inputTextStyle = { width: "250px", height: "30px" };
+
   return (
-    <div>
+    <div style={{ backgroundImage: `url(${backPhoto})`, height: "100vh" }}>
       <Container>
         <Row>
           <Col sm={12}>
-            <p>Send Invite</p>
+            <h2>Send Invite</h2>
+            <p>Click the Input Box to copy Invite.</p>
             <div>
               <p style={{ color: "green" }}>{successMessage}</p>
               <input
+                style={inputTextStyle}
                 onClick={() => copyToClipboard()}
                 value={inviteCode}
                 readOnly
               />
             </div>
             <div>
-              <p>Share Invite on WhatsApp: Click the button</p>
+              <p>Share Invite on WhatsApp: Click the Icon</p>
               <a
-                href={`whatsapp://send?text=Please play Ntarasi Game with me. Click this link: ${inviteUrl}/AcceptInvite?inv=${inviteCode}data-action=share/whatsapp/share`}
+                href={`whatsapp://send?text=Please play Ntarasi Game with me. Click this link: ${inviteUrl}/AcceptInvite?inv=${inviteCode}`}
               >
                 <img
                   src={whatsappImg}

@@ -260,15 +260,15 @@ function PlayGround() {
                 justifyContent: "center",
                 textAlign: "center",
                 height: "80vh",
-                border: "1px solid red",
+                border: "1px solid #9A000F",
               }}
             >
               <h3>Play Ground</h3>
               <div
                 style={{
                   overflowY: "scroll",
-                  height: "340px",
-                  border: "1px solid #ccc",
+                  height: "320px",
+                  border: "1px solid #9A000F",
                   borderRadius: "5px",
                   padding: "10px",
                 }}
@@ -278,11 +278,19 @@ function PlayGround() {
                     {card && (
                       <div
                         style={{
-                          marginBottom: "10px",
-                          padding: "5px",
-                          backgroundColor:
-                            outerIndex % 2 === 0 ? "#f0f0f0" : "#e0e0e0",
-                          borderRadius: "5px",
+                          float: "left",
+                          background:
+                            "linear-gradient(45deg, #2196F3, #0c54c6)",
+                          color: "#ffffff",
+                          width: "70%",
+                          boxShadow: "2px 5px 2px rgb(0 0 0 / 50%)",
+                          border: "2px solid #34a5ff",
+                          textShadow: "2px 2px #004175",
+                          borderRadius: "13px",
+                          padding: "10px 15px",
+                          fontSize: "21px",
+                          minHeight: "30px",
+                          margin: "14px 15px 10px 5px",
                         }}
                       >
                         <p
@@ -300,32 +308,72 @@ function PlayGround() {
                       if (message[0] === card) {
                         // If match is found, render the message
                         return (
-                          <div
-                            key={innerIndex}
-                            style={{
-                              marginBottom: "10px",
-                              padding: "5px",
-                              backgroundColor:
-                                innerIndex % 2 === 0 ? "#f0f0f0" : "#e0e0e0",
-                              borderRadius: "5px",
-                            }}
-                          >
-                            <p style={{ color: "red" }}>{message[1]}</p>
-                            {message[2] === "1" && (
-                              <img
-                                style={{ height: "40px" }}
-                                src={playerOneAvator}
-                                alt="profile1"
-                              />
-                            )}
-                            {message[2] === "2" && (
-                              <img
-                                style={{ height: "40px" }}
-                                src={playerTwoAvator}
-                                alt="profile2"
-                              />
-                            )}
-                            <p>{message[3]}</p>
+                          <div key={innerIndex}>
+                            <div>
+                              {message[2] === "1" && (
+                                <div
+                                  style={{
+                                    margin: "5px 0px 5px 0px",
+                                    float: "left",
+                                    border: "2px solid #d2d2d2",
+                                    padding: "7px",
+                                    width: "70%",
+                                    borderRadius: 10,
+                                    backgroundColor: "#FFDEAD",
+                                  }}
+                                >
+                                  <div
+                                    style={{
+                                      background: "white",
+                                      width: "40px",
+                                      borderRadius: 20,
+                                    }}
+                                  >
+                                    <img
+                                      style={{ height: "40px" }}
+                                      src={playerOneAvator}
+                                      alt="profile1"
+                                    />
+                                  </div>
+                                  <div style={{ textAlign: "center" }}>
+                                    {message[1]}
+                                  </div>
+                                </div>
+                              )}
+                              {message[2] === "2" && (
+                                <div
+                                  style={{
+                                    margin: "5px 0px 5px 0px",
+                                    float: "right",
+                                    border: "2px solid #d2d2d2",
+                                    padding: "7px",
+                                    width: "70%",
+                                    borderRadius: 10,
+                                    backgroundColor: "#F8F8FF",
+                                  }}
+                                >
+                                  <div
+                                    style={{
+                                      background: "grey",
+                                      width: "40px",
+                                      borderRadius: 20,
+                                    }}
+                                  >
+                                    <img
+                                      style={{
+                                        height: "40px",
+                                        justifyContent: "center",
+                                      }}
+                                      src={playerTwoAvator}
+                                      alt="profile2"
+                                    />
+                                  </div>
+                                  <div style={{ textAlign: "center" }}>
+                                    {message[1]}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
                           </div>
                         );
                       }
@@ -334,13 +382,20 @@ function PlayGround() {
                 ))}
               </div>
               {selectedGameMode === "online" && (
-                <div>
+                <div style={{ marginTop: "10px", marginBottom: "10px" }}>
                   <input
+                    style={{ width: "300px", height: "30px" }}
                     type="text"
                     value={typedText}
+                    placeholder="Type Reply..."
                     onChange={handleTextMessageChange}
                   />
-                  <button onClick={() => sendMessage(typedText)}>Send</button>
+                  <button
+                    style={{ height: "30px", marginLeft: "10px" }}
+                    onClick={() => sendMessage(typedText)}
+                  >
+                    Send
+                  </button>
                 </div>
               )}
             </Col>
@@ -348,10 +403,22 @@ function PlayGround() {
         </Row>
         <Row style={{ marginTop: 10 }}>
           <Col sm={3}>
-            <div>Player 1</div>
-            <div>
+            <div
+              style={{
+                backgroundColor: "whitesmoke",
+                padding: 10,
+                borderRadius: 10,
+                width: "auto",
+              }}
+            >
+              <div>
+                <span style={{ color: "#DC3545" }}>Player 1:</span>
+                <span style={{ color: "#7E1A8E", textSize: 2 }}>
+                  {playerOneName}
+                </span>
+              </div>
               <img
-                style={{ height: "60px" }}
+                style={{ height: "40px" }}
                 src={playerOneAvator}
                 alt="profile1"
               />
@@ -364,6 +431,8 @@ function PlayGround() {
                   height: 60,
                   marginTop: 20,
                   backgroundColor: "rgb(81,180,8)",
+                  borderRadius: 10,
+                  width: 100,
                 }}
                 onClick={() => handlePlayClick()}
               >
@@ -388,10 +457,22 @@ function PlayGround() {
             )}
           </Col>
           <Col sm={3}>
-            <div>Player 2</div>
-            <div>
+            <div
+              style={{
+                backgroundColor: "whitesmoke",
+                padding: 10,
+                borderRadius: 10,
+                width: "auto",
+              }}
+            >
+              <div>
+                <span style={{ color: "#DC3545" }}>Player 2:</span>
+                <span style={{ color: "#7E1A8E", textSize: 2 }}>
+                  {playerTwoName}
+                </span>
+              </div>
               <img
-                style={{ height: "60px" }}
+                style={{ height: "40px" }}
                 src={playerTwoAvator}
                 alt="profile2"
               />

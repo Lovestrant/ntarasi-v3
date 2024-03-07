@@ -160,25 +160,27 @@ function PlayGround() {
   //send new message
   const sendMessage = async (message) => {
     //send message
-    const formData = new FormData();
-    formData.append("session_id", inviteCode);
-    formData.append("player", playerNumber);
-    formData.append("deck", uid);
-    formData.append("questionid", questionid[viewedCards.length]);
-    formData.append("feedback", message);
-    formData.append("its_personal", "For both of you");
-    formData.append("question", cards[cardsCount]);
+    if (message !== "" && message != null) {
+      const formData = new FormData();
+      formData.append("session_id", inviteCode);
+      formData.append("player", playerNumber);
+      formData.append("deck", uid);
+      formData.append("questionid", questionid[viewedCards.length]);
+      formData.append("feedback", message);
+      formData.append("its_personal", "For both of you");
+      formData.append("question", cards[cardsCount]);
 
-    try {
-      const response = await postDataToAPI("/chat_new.php", formData);
-      if (response) {
-        if (response === 1) {
-          setTypedText("");
+      try {
+        const response = await postDataToAPI("/chat_new.php", formData);
+        if (response) {
+          if (response === 1) {
+            setTypedText("");
+          }
         }
+      } catch (error) {
+        console.log("error", error);
+        // Handle error
       }
-    } catch (error) {
-      console.log("error", error);
-      // Handle error
     }
   };
 

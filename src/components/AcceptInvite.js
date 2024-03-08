@@ -225,13 +225,24 @@ function AcceptInvite() {
     height: "30px",
     marginBottom: 10,
   };
+  const handleReject = () => {
+    navigate("/");
+  };
   return (
     <div style={{ backgroundImage: `url(${backPhoto})`, height: "100vh" }}>
       <h2>Accept Invite</h2>
       <Container>
         <Row>
           <Col sm={12}>
-            <h4>{playerOneName} has invited you to play Ntarasi</h4>
+            {playerOneGender === "Male" && (
+              <h4>{playerOneName} has invited you to play Ntarasi with him</h4>
+            )}
+            {playerOneGender === "Female" && (
+              <h4>{playerOneName} has invited you to play Ntarasi with her</h4>
+            )}
+            {playerOneGender === "Other" && (
+              <h4>{playerOneName} has invited you to play Ntarasi with them</h4>
+            )}
             {!enableProfileSetup && (
               <div>
                 <button
@@ -261,6 +272,7 @@ function AcceptInvite() {
                     color: "#25561E",
                     textShadow: "0px 2px 0px #9fbfee",
                   }}
+                  onClick={() => handleReject()}
                 >
                   Reject
                 </button>

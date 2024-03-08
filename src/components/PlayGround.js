@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-grid-system";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { fetchDataFromAPI, postDataToAPI } from "../shared/Shared";
 import backgroundPhoto from "../assets/backgrounds/b3.jpg";
+import NtarasiIcon from "../assets/graphics/Untitled-1.png";
 
 function PlayGround() {
+  const navigate = useNavigate();
   const location = useLocation();
   const {
     selectedGameMode,
@@ -20,7 +22,10 @@ function PlayGround() {
   } = location.state;
 
   const [cards, setCards] = useState([]);
-  const [viewedCards, setViewedCards] = useState([]);
+  const [viewedCards, setViewedCards] = useState(() => {
+    const storedViewedCards = localStorage.getItem("viewedCards");
+    return storedViewedCards ? JSON.parse(storedViewedCards) : [];
+  });
   const [cardsCount, setCardsCount] = useState(1);
   const [questionid, setQuestionid] = useState([]);
   const [turn, setTurn] = useState(1);
@@ -29,6 +34,12 @@ function PlayGround() {
   const [timeoutId, setTimeoutId] = useState(null);
   const [messageFeedback, setMessageFeedback] = useState([]);
   const [currentMessageNumber, setCurrentMessageNumber] = useState();
+
+  useEffect(() => {
+    localStorage.setItem("viewedCards", JSON.stringify(viewedCards));
+    setViewedCards(JSON.parse(localStorage.getItem("viewedCards")));
+    console.log("clg cards: ", JSON.parse(localStorage.getItem("viewedCards")));
+  }, [viewedCards.length]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,8 +74,11 @@ function PlayGround() {
           setViewedCards((viewedCards) => [...viewedCards, initialCard]);
         }
       }
+    } else if (!currentMessageNumber && viewedCards.length === 0) {
+      const initialCard = cards[0];
+      setViewedCards((viewedCards) => [...viewedCards, initialCard]);
     }
-  }, [currentMessageNumber]);
+  }, []);
 
   //check Player status
   useEffect(() => {
@@ -132,19 +146,16 @@ function PlayGround() {
         if (response) {
           const details = JSON.parse(response).details_;
 
-          // Initialize 2-dimensional array
           const messages = [];
 
           // Loop through each item in details array
           details.forEach((item) => {
-            // Extract feedback and question values and push them as an array
             const feedback = item.feedback;
             const question = item.question;
             const commentedPlayer = item.player;
             messages.push([question, feedback, commentedPlayer]);
           });
 
-          // Now messages is a 2-dimensional array containing feedback and question pairs
           setMessageFeedback(messages);
         }
       } catch (error) {
@@ -255,6 +266,12 @@ function PlayGround() {
   const handleTextMessageChange = (event) => {
     setTypedText(event.target.value);
   };
+
+  const handleClearGame = () => {
+    localStorage.clear("viewedCards");
+    navigate("/");
+  };
+
   return (
     <div style={{ backgroundImage: `url(${backgroundPhoto})` }}>
       <Container>
@@ -271,19 +288,28 @@ function PlayGround() {
                 border: "1px solid #9A000F",
               }}
             >
-              <h3>Play Ground</h3>
+              <div style={{ marginTop: 2, textAlign: "center" }}>
+                <img
+                  src={NtarasiIcon}
+                  alt="NtarasiIcon"
+                  style={{ height: "30px" }}
+                  onClick={() => handleClearGame()}
+                />
+                <h3>Play Ground</h3>
+              </div>
+
               <div
                 style={{
                   overflowY: "scroll",
-                  height: "320px",
+                  height: "45vh",
                   border: "1px solid #9A000F",
                   borderRadius: "5px",
                   padding: "10px",
                 }}
               >
-                {viewedCards.map((card, outerIndex) => (
-                  <div key={outerIndex}>
-                    {card && (
+                {viewedCards.map((card, outerIndex) => {
+                  return (
+                    <div key={outerIndex}>
                       <div
                         style={{
                           float: "left",
@@ -296,103 +322,97 @@ function PlayGround() {
                           textShadow: "2px 2px #004175",
                           borderRadius: "13px",
                           padding: "10px 15px",
-                          fontSize: "21px",
+                          fontSize: "16px",
+                          fontWeight: "bold",
                           minHeight: "30px",
                           margin: "14px 15px 10px 5px",
                         }}
                       >
-                        <p
-                          style={{
-                            margin: "0",
-                            fontSize: "16px",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {card}
-                        </p>
+                        <p>{card}</p>
                       </div>
-                    )}
-                    {messageFeedback.map((message, innerIndex) => {
-                      if (message[0] === card) {
-                        // If match is found, render the message
-                        return (
-                          <div key={innerIndex}>
-                            <div>
-                              {message[2] === "1" && (
-                                <div
-                                  style={{
-                                    margin: "5px 0px 5px 0px",
-                                    float: "left",
-                                    border: "2px solid #d2d2d2",
-                                    padding: "7px",
-                                    width: "70%",
-                                    borderRadius: 10,
-                                    backgroundColor: "#FFDEAD",
-                                  }}
-                                >
+                      {messageFeedback.map((message, innerIndex) => {
+                        if (card === message[0]) {
+                          // If match is found, render the message
+                          return (
+                            <div key={innerIndex}>
+                              <div>
+                                {message[2] === "1" && (
                                   <div
                                     style={{
-                                      background: "white",
-                                      width: "40px",
-                                      borderRadius: 20,
+                                      margin: "5px 0px 5px 0px",
+                                      float: "left",
+                                      border: "2px solid #d2d2d2",
+                                      padding: "7px",
+                                      width: "70%",
+                                      borderRadius: 10,
+                                      backgroundColor: "#FFDEAD",
                                     }}
                                   >
-                                    <img
-                                      style={{ height: "40px" }}
-                                      src={playerOneAvator}
-                                      alt="profile1"
-                                    />
-                                  </div>
-                                  <div style={{ textAlign: "center" }}>
-                                    {message[1]}
-                                  </div>
-                                </div>
-                              )}
-                              {message[2] === "2" && (
-                                <div
-                                  style={{
-                                    margin: "5px 0px 5px 0px",
-                                    float: "right",
-                                    border: "2px solid #d2d2d2",
-                                    padding: "7px",
-                                    width: "70%",
-                                    borderRadius: 10,
-                                    backgroundColor: "#F8F8FF",
-                                  }}
-                                >
-                                  <div
-                                    style={{
-                                      background: "grey",
-                                      width: "40px",
-                                      borderRadius: 20,
-                                    }}
-                                  >
-                                    <img
+                                    <div
                                       style={{
-                                        height: "40px",
-                                        justifyContent: "center",
+                                        background: "white",
+                                        width: "40px",
+                                        borderRadius: 20,
                                       }}
-                                      src={playerTwoAvator}
-                                      alt="profile2"
-                                    />
+                                    >
+                                      <img
+                                        style={{ height: "40px" }}
+                                        src={playerOneAvator}
+                                        alt="profile1"
+                                      />
+                                    </div>
+                                    <div style={{ textAlign: "center" }}>
+                                      {message[1]}
+                                    </div>
                                   </div>
-                                  <div style={{ textAlign: "center" }}>
-                                    {message[1]}
+                                )}
+                                {message[2] === "2" && (
+                                  <div
+                                    style={{
+                                      margin: "5px 0px 5px 0px",
+                                      float: "right",
+                                      border: "2px solid #d2d2d2",
+                                      padding: "7px",
+                                      width: "70%",
+                                      borderRadius: 10,
+                                      backgroundColor: "#F8F8FF",
+                                    }}
+                                  >
+                                    <div
+                                      style={{
+                                        background: "grey",
+                                        width: "40px",
+                                        borderRadius: 20,
+                                      }}
+                                    >
+                                      <img
+                                        style={{
+                                          height: "40px",
+                                          justifyContent: "center",
+                                        }}
+                                        src={playerTwoAvator}
+                                        alt="profile2"
+                                      />
+                                    </div>
+                                    <div style={{ textAlign: "center" }}>
+                                      {message[1]}
+                                    </div>
                                   </div>
-                                </div>
-                              )}
+                                )}
+                              </div>
                             </div>
-                          </div>
-                        );
-                      }
-                    })}
-                  </div>
-                ))}
+                          );
+                        }
+                        return null;
+                      })}
+                    </div>
+                  );
+                })}
               </div>
               {selectedGameMode === "online" && (
                 <div style={{ marginTop: "10px", marginBottom: "10px" }}>
                   <input
-                    style={{ width: "300px", height: "30px" }}
+                    style={{ width: "70%", height: "30px" }}
                     type="text"
                     value={typedText}
                     placeholder="Type Reply..."
@@ -409,7 +429,7 @@ function PlayGround() {
             </Col>
           </Col>
         </Row>
-        <Row style={{ marginTop: 10 }}>
+        <Row style={{ marginTop: 10, display: "flex" }}>
           <Col sm={3}>
             <div
               style={{

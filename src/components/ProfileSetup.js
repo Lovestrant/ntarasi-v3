@@ -570,7 +570,7 @@ function ProfileSetup() {
                     value={selectedGender}
                     onChange={handlegenderSelectedChange}
                   >
-                    <option value="">Select an option...</option>
+                    <option value="">Select gender option.</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                     <option value="Other">Other</option>

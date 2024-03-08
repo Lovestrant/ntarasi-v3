@@ -95,7 +95,7 @@ function CategorySelection() {
                       src={getImageBackground(item.image)}
                       alt={item.image}
                       style={{
-                        height: "250px",
+                        height: "350px",
                         width: "100%", // Ensure image fills the container
                         borderRadius: "10px",
                       }}

@@ -66,19 +66,30 @@ function PlayGround() {
 
   //Set one Card to ViewedCards on Initial Reload
   useEffect(() => {
-    if (currentMessageNumber && viewedCards.length === 0) {
-      if (cards.length > 0) {
-        let i;
-        for (i = 0; i <= currentMessageNumber; i++) {
-          const initialCard = cards[i];
-          setViewedCards((viewedCards) => [...viewedCards, initialCard]);
-        }
-      }
-    } else if (!currentMessageNumber && viewedCards.length === 0) {
+    if (cards.length > 0 && viewedCards.length === 0) {
       const initialCard = cards[0];
       setViewedCards((viewedCards) => [...viewedCards, initialCard]);
     }
-  }, []);
+  }, [cards, viewedCards]);
+
+  useEffect(() => {
+    if (currentMessageNumber) {
+      if (cards.length > 0) {
+        let i;
+        if (viewedCards.length > 0) {
+          for (i = viewedCards.length; i < currentMessageNumber; i++) {
+            const initialCard = cards[i];
+            setViewedCards((viewedCards) => [...viewedCards, initialCard]);
+          }
+        } else {
+          for (i = 0; i < currentMessageNumber; i++) {
+            const initialCard = cards[i];
+            setViewedCards((viewedCards) => [...viewedCards, initialCard]);
+          }
+        }
+      }
+    }
+  }, [currentMessageNumber, cards, viewedCards]);
 
   //check Player status
   useEffect(() => {
@@ -182,10 +193,10 @@ function PlayGround() {
       formData.append("session_id", inviteCode);
       formData.append("player", playerNumber);
       formData.append("deck", uid);
-      formData.append("questionid", questionid[viewedCards.length]);
+      formData.append("questionid", viewedCards.length);
       formData.append("feedback", message);
       formData.append("its_personal", "For both of you");
-      formData.append("question", cards[cardsCount]);
+      formData.append("question", cards[cardsCount - 1]);
 
       try {
         const response = await postDataToAPI("/chat_new.php", formData);
@@ -308,6 +319,21 @@ function PlayGround() {
                 }}
               >
                 {viewedCards.map((card, outerIndex) => {
+                  let foundMatch = false;
+                  let message = [];
+                  let theMessageFeedbacks = [];
+                  for (
+                    let innerIndex = 0;
+                    innerIndex < messageFeedback.length;
+                    innerIndex++
+                  ) {
+                    const messageFed = messageFeedback[innerIndex];
+                    if (card === messageFed[0]) {
+                      foundMatch = true;
+                      message = messageFed;
+                      theMessageFeedbacks.push([messageFed[1], messageFed[2]]);
+                    }
+                  }
                   return (
                     <div key={outerIndex}>
                       <div
@@ -330,14 +356,16 @@ function PlayGround() {
                       >
                         <p>{card}</p>
                       </div>
-                      {messageFeedback.map((message, innerIndex) => {
-                        if (card === message[0]) {
-                          // If match is found, render the message
-                          return (
-                            <div key={innerIndex}>
-                              <div>
-                                {message[2] === "1" && (
+                      {foundMatch ? (
+                        <div>
+                          {theMessageFeedbacks
+                            .slice()
+                            .reverse()
+                            .map((messageFed, index) => {
+                              if (messageFed[1] === "1") {
+                                return (
                                   <div
+                                    key={index}
                                     style={{
                                       margin: "5px 0px 5px 0px",
                                       float: "left",
@@ -362,12 +390,14 @@ function PlayGround() {
                                       />
                                     </div>
                                     <div style={{ textAlign: "center" }}>
-                                      {message[1]}
+                                      {messageFed[0]}
                                     </div>
                                   </div>
-                                )}
-                                {message[2] === "2" && (
+                                );
+                              } else if (messageFed[1] === "2") {
+                                return (
                                   <div
+                                    key={index}
                                     style={{
                                       margin: "5px 0px 5px 0px",
                                       float: "right",
@@ -395,20 +425,23 @@ function PlayGround() {
                                       />
                                     </div>
                                     <div style={{ textAlign: "center" }}>
-                                      {message[1]}
+                                      {messageFed[0]}
                                     </div>
                                   </div>
-                                )}
-                              </div>
-                            </div>
-                          );
-                        }
-                        return null;
-                      })}
+                                );
+                              } else {
+                                return null;
+                              }
+                            })}
+                        </div>
+                      ) : (
+                        <p style={{ marginLeft: "10px" }}></p>
+                      )}
                     </div>
                   );
                 })}
               </div>
+
               {selectedGameMode === "online" && (
                 <div style={{ marginTop: "10px", marginBottom: "10px" }}>
                   <input
@@ -468,7 +501,7 @@ function PlayGround() {
               </button>
             )}
             {selectedGameMode === "online" && !myTurn && (
-              <p style={{ color: "green" }}>Wait for your turn</p>
+              <p style={{ color: "red" }}>Wait for your turn</p>
             )}
 
             {selectedGameMode === "offline" && (

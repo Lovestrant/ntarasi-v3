@@ -83,7 +83,8 @@ function CategorySelection() {
                     onClick={() => handleClick(item.uid)}
                     style={{
                       marginBottom: 30,
-                      width: "calc(50% - 20px)", // Adjust width for two columns
+                      width: "calc(50% - 5px)", // Adjust width for two columns
+                      height: "auto",
                       textAlign: "center",
                       justifyContent: "center",
                       border: "1px solid black",

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Col, Container, Row } from "react-grid-system";
 import { useLocation, useNavigate } from "react-router-dom";
 import { fetchDataFromAPI, postDataToAPI } from "../shared/Shared";
@@ -34,12 +34,18 @@ function PlayGround() {
   const [timeoutId, setTimeoutId] = useState(null);
   const [messageFeedback, setMessageFeedback] = useState([]);
   const [currentMessageNumber, setCurrentMessageNumber] = useState();
+  const chatContainerRef = useRef(null);
 
   useEffect(() => {
     localStorage.setItem("viewedCards", JSON.stringify(viewedCards));
     setViewedCards(JSON.parse(localStorage.getItem("viewedCards")));
     console.log("clg cards: ", JSON.parse(localStorage.getItem("viewedCards")));
   }, [viewedCards.length]);
+
+  useEffect(() => {
+    // Scroll to the bottom of the chat container when messages change
+    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+  }, [viewedCards]); // Trigger effect whenever messages change
 
   useEffect(() => {
     const fetchData = async () => {
@@ -310,6 +316,7 @@ function PlayGround() {
               </div>
 
               <div
+                ref={chatContainerRef}
                 style={{
                   overflowY: "scroll",
                   height: "45vh",
@@ -355,6 +362,17 @@ function PlayGround() {
                         }}
                       >
                         <p>{card}</p>
+                        {selectedGameMode === "offline" && (
+                          <span
+                            style={{
+                              textSize: 1,
+                              color: "pink",
+                              display: "flex",
+                            }}
+                          >
+                            Please give a verbal Response.
+                          </span>
+                        )}
                       </div>
                       {foundMatch ? (
                         <div>
@@ -510,6 +528,8 @@ function PlayGround() {
                   height: 60,
                   marginTop: 20,
                   backgroundColor: "rgb(81,180,8)",
+                  borderRadius: 10,
+                  width: 100,
                 }}
                 onClick={() => handlePlayClick()}
               >

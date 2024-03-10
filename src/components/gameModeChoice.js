@@ -2,9 +2,8 @@ import React from "react";
 import { Container, Row, Col } from "react-grid-system";
 import couples from "../assets/graphics/couple.png";
 import smartphone from "../assets/graphics/smartphone.png";
-import back from "../assets/graphics/back.jpg";
-import { Link, useNavigate } from "react-router-dom";
 import backPhoto from "../assets/graphics/back.jpg";
+import { Link, useNavigate } from "react-router-dom";
 
 function GameModeChoice() {
   const backgroundStyle = {
@@ -12,25 +11,23 @@ function GameModeChoice() {
     display: "flex",
     backgroundSize: "cover",
     justifyContent: "center",
-    height: "100vh",
+    minHeight: "100vh",
     alignItems: "center",
   };
-  const btnOnlineStyle = {
-    backgroundColor: "rgb(178 2 36 / 92%)",
-    marginLeft: 15,
-    padding: 10,
-    borderRadius: 10,
+
+  const btnStyle = {
+    padding: "10px",
+    borderRadius: "10px",
+    margin: "10px",
+    textAlign: "center",
   };
-  const btnOfflineStyle = {
-    backgroundColor: "rgb(113 12 46 / 92%)",
-    marginLeft: 15,
-    padding: 10,
-    borderRadius: 10,
-  };
+
   const imgStyle = {
-    height: "200px",
+    height: "60%",
   };
+
   const navigate = useNavigate();
+
   const handleClick = (mode) => {
     navigate("/CategorySelection", { state: { selectedGameMode: mode } });
   };
@@ -39,18 +36,24 @@ function GameModeChoice() {
     <div style={backgroundStyle}>
       <Container>
         <Row>
-          <Col sm={6}>
+          <Col xs={12}>
+            <h2>Welcome To Ntarasi</h2>
+            <p>Choose mode below to continue:</p>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} sm={6}>
             <button
-              style={btnOfflineStyle}
+              style={{ ...btnStyle, backgroundColor: "rgb(113 12 46 / 92%)" }}
               onClick={() => handleClick("offline")}
             >
               <img src={couples} alt="couples" style={imgStyle} />
               <p style={{ color: "white" }}>PLAY ON THIS GADGET</p>
             </button>
           </Col>
-          <Col sm={6}>
+          <Col xs={12} sm={6}>
             <button
-              style={btnOnlineStyle}
+              style={{ ...btnStyle, backgroundColor: "rgb(178 2 36 / 92%)" }}
               onClick={() => handleClick("online")}
             >
               <img src={smartphone} alt="smartphone" style={imgStyle} />

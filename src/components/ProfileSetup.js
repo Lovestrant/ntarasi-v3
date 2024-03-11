@@ -214,7 +214,7 @@ function ProfileSetup() {
     marginBottom: 10,
   };
   return (
-    <div style={{ backgroundImage: `url(${backPhoto})`, height: "100vh" }}>
+    <div style={{ backgroundImage: `url(${backPhoto})`, minHeight: "100vh" }}>
       <Container>
         <h3>Set Your Profile</h3>
         <Row>

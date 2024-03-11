@@ -78,17 +78,16 @@ function PlayGround() {
     }
   }, [cards, viewedCards]);
 
+  //Load Messages as soon as a player clicks next
   useEffect(() => {
-    if (currentMessageNumber) {
+    if (currentMessageNumber > 0) {
       if (cards.length > 0) {
         let i;
-        if (viewedCards.length > 0) {
-          for (i = viewedCards.length; i < currentMessageNumber; i++) {
-            const initialCard = cards[i];
-            setViewedCards((viewedCards) => [...viewedCards, initialCard]);
-          }
-        } else {
-          for (i = 0; i < currentMessageNumber; i++) {
+        if (
+          viewedCards.length > 0 &&
+          currentMessageNumber >= viewedCards.length
+        ) {
+          for (i = viewedCards.length; i < currentMessageNumber + 1; i++) {
             const initialCard = cards[i];
             setViewedCards((viewedCards) => [...viewedCards, initialCard]);
           }
@@ -202,7 +201,7 @@ function PlayGround() {
       formData.append("questionid", viewedCards.length);
       formData.append("feedback", message);
       formData.append("its_personal", "For both of you");
-      formData.append("question", cards[cardsCount - 1]);
+      formData.append("question", cards[currentMessageNumber]);
 
       try {
         const response = await postDataToAPI("/chat_new.php", formData);
@@ -246,7 +245,7 @@ function PlayGround() {
       formData.append("sessionid", inviteCode);
       formData.append("current_player_pos", "0");
       formData.append("die_number", "0");
-      formData.append("current_card", cardsCount);
+      formData.append("current_card", currentMessageNumber + 1);
       formData.append("current_player_points", "0");
       formData.append("bg", "bg.png");
       formData.append("level", "0");
@@ -260,10 +259,10 @@ function PlayGround() {
         );
         console.log("UpdateRes" + response);
         if (response) {
-          const newCard = cards[cardsCount];
+          const newCard = cards[currentMessageNumber + 1];
           if (newCard) {
             setViewedCards((viewedCards) => [...viewedCards, newCard]);
-            setCardsCount(cardsCount + 1);
+            setCardsCount(currentMessageNumber + 1);
           }
         }
       } catch (error) {

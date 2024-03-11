@@ -229,7 +229,7 @@ function AcceptInvite() {
     navigate("/");
   };
   return (
-    <div style={{ backgroundImage: `url(${backPhoto})`, height: "100vh" }}>
+    <div style={{ backgroundImage: `url(${backPhoto})`, minHeight: "100vh" }}>
       <h2>Accept Invite</h2>
       <Container>
         <Row>

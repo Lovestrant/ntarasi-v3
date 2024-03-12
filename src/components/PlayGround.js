@@ -417,11 +417,20 @@ function PlayGround() {
                   alignItems: "center",
                 }}
               >
-                <p>
+                <p style={{ fontWeight: "bold" }}>
                   Level: <span style={{ color: "red" }}>{gameLevel}</span>
                 </p>
                 <p style={{ fontWeight: "bold" }}>Play Ground</p>
-                <button onClick={() => handleClearGame()}>Quit game</button>
+                <button
+                  style={{
+                    backgroundColor: "brown",
+                    color: "white",
+                    borderRadius: 5,
+                  }}
+                  onClick={() => handleClearGame()}
+                >
+                  Quit game
+                </button>
               </div>
 
               <div

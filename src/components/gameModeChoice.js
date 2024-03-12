@@ -37,7 +37,7 @@ function GameModeChoice() {
       <Container>
         <Row>
           <Col xs={12}>
-            <h2>Welcome To Ntarasi</h2>
+            <h2>Welcome To Ntarasi Play</h2>
             <p>Choose mode below to continue:</p>
           </Col>
         </Row>

@@ -4,6 +4,23 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { fetchDataFromAPI, postDataToAPI } from "../shared/Shared";
 import backgroundPhoto from "../assets/backgrounds/b3.jpg";
 import NtarasiIcon from "../assets/graphics/Untitled-1.png";
+import {
+  endLevel10Gifts,
+  endLevel11Gifts,
+  endLevel12Gifts,
+  endLevel13Gifts,
+  endLevel14Gifts,
+  endLevel15Gifts,
+  endLevel1Gifts,
+  endLevel2Gifts,
+  endLevel3Gifts,
+  endLevel4Gifts,
+  endLevel5Gifts,
+  endLevel6Gifts,
+  endLevel7Gifts,
+  endLevel8Gifts,
+  endLevel9Gifts,
+} from "../shared/GiftsList";
 
 function PlayGround() {
   const navigate = useNavigate();
@@ -34,13 +51,91 @@ function PlayGround() {
   const [timeoutId, setTimeoutId] = useState(null);
   const [messageFeedback, setMessageFeedback] = useState([]);
   const [currentMessageNumber, setCurrentMessageNumber] = useState();
+  const [gameLevel, setGameLevel] = useState(1);
+  const [gifts, setGifts] = useState(() => {
+    const storedGifts = localStorage.getItem("gifts");
+    return storedGifts ? JSON.parse(storedGifts) : [];
+  });
   const chatContainerRef = useRef(null);
+
+  //Increment game Category as required and assign Gifts
+  useEffect(() => {
+    if (!viewedCards.length) {
+      return;
+    }
+
+    if (viewedCards.length === 8) {
+      setGameLevel(2);
+      setGifts((gifts) => [...gifts, [endLevel1Gifts, "8"]]);
+    }
+    if (viewedCards.length === 16) {
+      setGameLevel(3);
+      setGifts((gifts) => [...gifts, [endLevel2Gifts, "16"]]);
+    }
+    if (viewedCards.length === 24) {
+      setGameLevel(4);
+      setGifts((gifts) => [...gifts, [endLevel3Gifts, "24"]]);
+    }
+    if (viewedCards.length === 32) {
+      setGameLevel(5);
+      setGifts((gifts) => [...gifts, [endLevel4Gifts, "32"]]);
+    }
+    if (viewedCards.length === 40) {
+      setGameLevel(6);
+      setGifts((gifts) => [...gifts, [endLevel5Gifts, "40"]]);
+    }
+    if (viewedCards.length === 48) {
+      setGameLevel(7);
+      setGifts((gifts) => [...gifts, [endLevel6Gifts, "48"]]);
+    }
+    if (viewedCards.length === 56) {
+      setGameLevel(8);
+      setGifts((gifts) => [...gifts, [endLevel7Gifts, "56"]]);
+    }
+    if (viewedCards.length === 64) {
+      setGameLevel(9);
+      setGifts((gifts) => [...gifts, [endLevel8Gifts, "64"]]);
+    }
+    if (viewedCards.length === 72) {
+      setGameLevel(10);
+      setGifts((gifts) => [...gifts, [endLevel9Gifts, "72"]]);
+    }
+    if (viewedCards.length === 80) {
+      setGameLevel(11);
+      setGifts((gifts) => [...gifts, [endLevel10Gifts, "80"]]);
+    }
+    if (viewedCards.length === 88) {
+      setGameLevel(12);
+      setGifts((gifts) => [...gifts, [endLevel11Gifts, "88"]]);
+    }
+    if (viewedCards.length === 88) {
+      setGameLevel(12);
+      setGifts((gifts) => [...gifts, [endLevel12Gifts, "88"]]);
+    }
+    if (viewedCards.length === 96) {
+      setGameLevel(13);
+      setGifts((gifts) => [...gifts, [endLevel13Gifts, "96"]]);
+    }
+    if (viewedCards.length === 104) {
+      setGameLevel(14);
+      setGifts((gifts) => [...gifts, [endLevel14Gifts, "104"]]);
+    }
+    if (viewedCards.length === cards.length && cards.length !== 0) {
+      //Signify End of Level
+      setGameLevel(15);
+      setGifts((gifts) => [...gifts, [endLevel15Gifts, "finalGift"]]);
+    }
+  }, [viewedCards.length]);
 
   useEffect(() => {
     localStorage.setItem("viewedCards", JSON.stringify(viewedCards));
     setViewedCards(JSON.parse(localStorage.getItem("viewedCards")));
-    console.log("clg cards: ", JSON.parse(localStorage.getItem("viewedCards")));
   }, [viewedCards.length]);
+
+  useEffect(() => {
+    localStorage.setItem("gifts", JSON.stringify(gifts));
+    setGifts(JSON.parse(localStorage.getItem("gifts")));
+  }, [gifts.length]);
 
   useEffect(() => {
     // Scroll to the bottom of the chat container when messages change
@@ -260,7 +355,7 @@ function PlayGround() {
         console.log("UpdateRes" + response);
         if (response) {
           const newCard = cards[currentMessageNumber + 1];
-          if (newCard) {
+          if (newCard && currentMessageNumber !== cards.length) {
             setViewedCards((viewedCards) => [...viewedCards, newCard]);
             setCardsCount(currentMessageNumber + 1);
           }
@@ -271,7 +366,7 @@ function PlayGround() {
       }
     } else {
       const newCard = cards[cardsCount];
-      if (newCard) {
+      if (newCard && cardsCount !== cards.length) {
         setViewedCards((viewedCards) => [...viewedCards, newCard]);
         setCurrentMessageNumber(cardsCount);
         setCardsCount(cardsCount + 1);
@@ -285,13 +380,14 @@ function PlayGround() {
 
   const handleClearGame = () => {
     localStorage.clear("viewedCards");
+    localStorage.clear("gifts");
     navigate("/");
   };
 
   return (
     <div style={{ backgroundImage: `url(${backgroundPhoto})` }}>
       <Container>
-        <Row style={{ backgroundColor: "whitesmoke" }}>
+        <Row style={{ backgroundColor: "whitesmoke", opacity: 0.8 }}>
           <Col sm={12}>
             <Col
               lg={12}
@@ -304,14 +400,28 @@ function PlayGround() {
                 border: "1px solid #9A000F",
               }}
             >
-              <div style={{ marginTop: 2, textAlign: "center" }}>
+              <div>
                 <img
                   src={NtarasiIcon}
                   alt="NtarasiIcon"
                   style={{ height: "30px" }}
                   onClick={() => handleClearGame()}
                 />
-                <h3>Play Ground</h3>
+              </div>
+              <div
+                style={{
+                  marginTop: 0,
+                  textAlign: "center",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <p>
+                  Level: <span style={{ color: "red" }}>{gameLevel}</span>
+                </p>
+                <p style={{ fontWeight: "bold" }}>Play Ground</p>
+                <button onClick={() => handleClearGame()}>Quit game</button>
               </div>
 
               <div
@@ -454,11 +564,91 @@ function PlayGround() {
                       ) : (
                         <p style={{ marginLeft: "10px" }}></p>
                       )}
+                      {gifts.map((gift, giftIndex) => {
+                        if (
+                          parseInt(gift[1]) === outerIndex &&
+                          parseInt(gift[1]) !== cards.length
+                        ) {
+                          return (
+                            <div
+                              style={{
+                                margin: "5px 0px 5px 0px",
+                                float: "left",
+                                border: "2px solid #d2d2d2",
+                                textAlign: "left",
+                                padding: "7px",
+                                width: "80%",
+                                borderRadius: 10,
+                                backgroundColor: "pink",
+                              }}
+                            >
+                              <h5>
+                                List of love gifts(Pick one to be given in the
+                                next 3 days)
+                              </h5>
+                              <p>{gift[0][0]}</p>
+                              <p>{gift[0][1]}</p>
+                              <p>{gift[0][2]}</p>
+                              <p>{gift[0][3]}</p>
+                            </div>
+                          );
+                        }
+                        if (
+                          gift[1] === "finalGift" &&
+                          outerIndex + 1 === viewedCards.length
+                        ) {
+                          return (
+                            <div
+                              style={{
+                                margin: "5px 0px 5px 0px",
+                                float: "left",
+                                border: "2px solid #d2d2d2",
+                                textAlign: "left",
+                                padding: "7px",
+                                width: "80%",
+                                borderRadius: 10,
+                                backgroundColor: "pink",
+                              }}
+                            >
+                              <h5>
+                                List of love gifts(Pick one to be given in the
+                                next 3 days)
+                              </h5>
+                              <p>{gift[0][0]}</p>
+                              <p>{gift[0][1]}</p>
+                              <p>{gift[0][2]}</p>
+                              <p>{gift[0][3]}</p>
+                              <h4>
+                                Congratulations! You have completed this
+                                category of cards. To continue enjoying this
+                                game, try getting to know you, Romance and
+                                finance,coffee date category, dating category,
+                                married category or the between the sheets
+                                category
+                              </h4>
+                              <p>
+                                <button
+                                  style={{ height: "30px" }}
+                                  onClick={() => {
+                                    handleClearGame();
+                                  }}
+                                >
+                                  Select another Category
+                                </button>
+                              </p>
+                            </div>
+                          );
+                        }
+                        console.log("cards.length", cards.length);
+                        console.log("viewed.length", viewedCards.length);
+                        console.log("outerIndex", outerIndex);
+                        console.log("gift[1]", gift[1]);
+                        return null;
+                      })}
                     </div>
                   );
                 })}
               </div>
-
               {selectedGameMode === "online" && (
                 <div style={{ marginTop: "10px", marginBottom: "10px" }}>
                   <input
@@ -479,12 +669,20 @@ function PlayGround() {
             </Col>
           </Col>
         </Row>
-        <Row style={{ marginTop: 10, display: "flex" }}>
+        <Row
+          style={{
+            marginTop: 20,
+            textAlign: "center",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <Col sm={3}>
             <div
               style={{
                 backgroundColor: "whitesmoke",
-                padding: 10,
+                padding: 4,
                 borderRadius: 10,
                 width: "auto",
               }}
@@ -502,7 +700,7 @@ function PlayGround() {
               />
             </div>
           </Col>
-          <Col sm={6}>
+          <Col sm={6} style={{ display: "flex", justifyContent: "center" }}>
             {selectedGameMode === "online" && myTurn && (
               <button
                 style={{
@@ -520,7 +718,6 @@ function PlayGround() {
             {selectedGameMode === "online" && !myTurn && (
               <p style={{ color: "red" }}>Wait for your turn</p>
             )}
-
             {selectedGameMode === "offline" && (
               <button
                 style={{
@@ -540,7 +737,7 @@ function PlayGround() {
             <div
               style={{
                 backgroundColor: "whitesmoke",
-                padding: 10,
+                padding: 4,
                 borderRadius: 10,
                 width: "auto",
               }}

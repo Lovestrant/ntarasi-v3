@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { Col, Container, Row } from "react-grid-system";
 import { useLocation, useNavigate } from "react-router-dom";
 import { fetchDataFromAPI, postDataToAPI } from "../shared/Shared";
-import backgroundPhoto from "../assets/backgrounds/b3.jpg";
 import NtarasiIcon from "../assets/graphics/Untitled-1.png";
 import {
   endLevel10Gifts,
@@ -21,6 +20,22 @@ import {
   endLevel8Gifts,
   endLevel9Gifts,
 } from "../shared/GiftsList";
+
+import b2 from "../assets/backgrounds/b2.jpg";
+import b3 from "../assets/backgrounds/b3.jpg";
+import b4 from "../assets/backgrounds/b4.jpg";
+import b5 from "../assets/backgrounds/b5.jpg";
+import b6 from "../assets/backgrounds/b6.jpg";
+import b7 from "../assets/backgrounds/b7.jpg";
+import b8 from "../assets/backgrounds/b8.jpg";
+import b9 from "../assets/backgrounds/b9.jpg";
+import b10 from "../assets/backgrounds/b10.jpg";
+import b11 from "../assets/backgrounds/b11.jpg";
+import b12 from "../assets/backgrounds/b12.jpg";
+import b13 from "../assets/backgrounds/b13.jpg";
+import b14 from "../assets/backgrounds/b14.jpg";
+import b15 from "../assets/backgrounds/b15.jpg";
+import defaultPic from "../assets/backgrounds/default.jpg";
 
 function PlayGround() {
   const navigate = useNavigate();
@@ -56,6 +71,7 @@ function PlayGround() {
     const storedGifts = localStorage.getItem("gifts");
     return storedGifts ? JSON.parse(storedGifts) : [];
   });
+  const [backgroundPhoto, setBackgroundPhoto] = useState(defaultPic);
   const chatContainerRef = useRef(null);
 
   //Increment game Category as required and assign Gifts
@@ -66,63 +82,78 @@ function PlayGround() {
 
     if (viewedCards.length === 8) {
       setGameLevel(2);
+      setBackgroundPhoto(b2);
       setGifts((gifts) => [...gifts, [endLevel1Gifts, "8"]]);
     }
     if (viewedCards.length === 16) {
       setGameLevel(3);
+      setBackgroundPhoto(b3);
       setGifts((gifts) => [...gifts, [endLevel2Gifts, "16"]]);
     }
     if (viewedCards.length === 24) {
       setGameLevel(4);
+      setBackgroundPhoto(b4);
       setGifts((gifts) => [...gifts, [endLevel3Gifts, "24"]]);
     }
     if (viewedCards.length === 32) {
       setGameLevel(5);
+      setBackgroundPhoto(b5);
       setGifts((gifts) => [...gifts, [endLevel4Gifts, "32"]]);
     }
     if (viewedCards.length === 40) {
       setGameLevel(6);
+      setBackgroundPhoto(b6);
       setGifts((gifts) => [...gifts, [endLevel5Gifts, "40"]]);
     }
     if (viewedCards.length === 48) {
       setGameLevel(7);
+      setBackgroundPhoto(b7);
       setGifts((gifts) => [...gifts, [endLevel6Gifts, "48"]]);
     }
     if (viewedCards.length === 56) {
       setGameLevel(8);
+      setBackgroundPhoto(b8);
       setGifts((gifts) => [...gifts, [endLevel7Gifts, "56"]]);
     }
     if (viewedCards.length === 64) {
       setGameLevel(9);
+      setBackgroundPhoto(b9);
       setGifts((gifts) => [...gifts, [endLevel8Gifts, "64"]]);
     }
     if (viewedCards.length === 72) {
       setGameLevel(10);
+      setBackgroundPhoto(b10);
       setGifts((gifts) => [...gifts, [endLevel9Gifts, "72"]]);
     }
     if (viewedCards.length === 80) {
       setGameLevel(11);
+      setBackgroundPhoto(b11);
       setGifts((gifts) => [...gifts, [endLevel10Gifts, "80"]]);
     }
     if (viewedCards.length === 88) {
       setGameLevel(12);
+      setBackgroundPhoto(b12);
       setGifts((gifts) => [...gifts, [endLevel11Gifts, "88"]]);
-    }
-    if (viewedCards.length === 88) {
-      setGameLevel(12);
-      setGifts((gifts) => [...gifts, [endLevel12Gifts, "88"]]);
     }
     if (viewedCards.length === 96) {
       setGameLevel(13);
-      setGifts((gifts) => [...gifts, [endLevel13Gifts, "96"]]);
+      setBackgroundPhoto(b13);
+      setGifts((gifts) => [...gifts, [endLevel12Gifts, "96"]]);
     }
     if (viewedCards.length === 104) {
       setGameLevel(14);
+      setBackgroundPhoto(b14);
+      setGifts((gifts) => [...gifts, [endLevel13Gifts, "104"]]);
+    }
+    if (viewedCards.length === 112) {
+      setGameLevel(15);
+      setBackgroundPhoto(b15);
       setGifts((gifts) => [...gifts, [endLevel14Gifts, "104"]]);
     }
     if (viewedCards.length === cards.length && cards.length !== 0) {
       //Signify End of Level
-      setGameLevel(15);
+      setGameLevel(16);
+      setBackgroundPhoto(defaultPic);
       setGifts((gifts) => [...gifts, [endLevel15Gifts, "finalGift"]]);
     }
   }, [viewedCards.length]);

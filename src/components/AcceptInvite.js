@@ -35,7 +35,7 @@ import w12 from "../assets/graphics/w12.png";
 import w13 from "../assets/graphics/w13.png";
 import w14 from "../assets/graphics/w14.png";
 import w15 from "../assets/graphics/w15.png";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // Store the imported image paths in an array
 const maleAvatars = [
@@ -75,7 +75,10 @@ const femaleAvatars = [
 const allAvators = [...maleAvatars, ...femaleAvatars];
 
 function AcceptInvite() {
-  const [inviteCode, setInviteCode] = useState("");
+  const location = useLocation();
+  const { invCode } = location.state;
+
+  const [inviteCode, setInviteCode] = useState(invCode);
   const [deck, setDeck] = useState();
   const [playerOneName, setPlayerOneName] = useState("");
   const [playerOneGender, setPlayerOneGender] = useState("");
@@ -115,25 +118,6 @@ function AcceptInvite() {
     }
     return true;
   };
-
-  useEffect(() => {
-    const getInviteCodeFromURL = () => {
-      const currentPageURL = window.location.href;
-      const queryParams = currentPageURL.split("?")[1];
-
-      if (queryParams) {
-        const paramsArray = queryParams.split("&");
-        for (const param of paramsArray) {
-          const [key, value] = param.split("=");
-          if (key === "inv") {
-            return value;
-          }
-        }
-      }
-    };
-    //scan code and set it to state
-    setInviteCode(getInviteCodeFromURL());
-  }, []);
 
   useEffect(() => {
     const checkInvite = async () => {

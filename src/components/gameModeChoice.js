@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-grid-system";
 import couples from "../assets/graphics/couple.png";
 import smartphone from "../assets/graphics/smartphone.png";
@@ -6,6 +6,8 @@ import backPhoto from "../assets/graphics/back.jpg";
 import { Link, useNavigate } from "react-router-dom";
 
 function GameModeChoice() {
+  // const [inviteCode, setInviteCode] = useState(null);
+
   const backgroundStyle = {
     backgroundImage: `url(${backPhoto})`,
     display: "flex",
@@ -31,6 +33,29 @@ function GameModeChoice() {
   const handleClick = (mode) => {
     navigate("/CategorySelection", { state: { selectedGameMode: mode } });
   };
+
+  useEffect(() => {
+    const getInviteCodeFromURL = () => {
+      const currentPageURL = window.location.href;
+      const queryParams = currentPageURL.split("?")[1];
+
+      if (queryParams) {
+        const paramsArray = queryParams.split("&");
+        for (const param of paramsArray) {
+          const [key, value] = param.split("=");
+          if (key === "inv") {
+            return value;
+          }
+        }
+      }
+    };
+    //scan code and set it to state
+    const inviteCode = getInviteCodeFromURL();
+    if (inviteCode !== "" && inviteCode !== null && inviteCode !== undefined) {
+      navigate("/AcceptInvite", { state: { invCode: inviteCode } });
+      console.log("inviteCode ", inviteCode);
+    }
+  }, []);
 
   return (
     <div style={backgroundStyle}>

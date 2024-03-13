@@ -96,7 +96,7 @@ function SendInvite() {
   }, [responseData, inviteCode]);
 
   const copyToClipboard = async () => {
-    const tempInput = `${playerOneName} has invited you to play NtarasiPlay with them. You can play online or download the app ${inviteUrl}/AcceptInvite?inv=${inviteCode}`;
+    const tempInput = `${playerOneName} has invited you to play NtarasiPlay with them. You can play online or download the app ${inviteUrl}/?inv=${inviteCode}`;
     try {
       await navigator.clipboard.writeText(tempInput);
       setSuccessMessage("Copied to Clipboard!");
@@ -126,7 +126,7 @@ function SendInvite() {
             <div>
               <p>Share Invite on WhatsApp: Click the Icon</p>
               <a
-                href={`whatsapp://send?text=Please play Ntarasi Game with me. Click this link: ${inviteUrl}/AcceptInvite?inv=${inviteCode}`}
+                href={`whatsapp://send?text=Please play Ntarasi Game with me. Click this link: ${inviteUrl}/?inv=${inviteCode}`}
               >
                 <img
                   src={whatsappImg}

@@ -4,6 +4,7 @@ import couples from "../assets/graphics/couple.png";
 import smartphone from "../assets/graphics/smartphone.png";
 import backPhoto from "../assets/graphics/back.jpg";
 import { Link, useNavigate } from "react-router-dom";
+import { initializeReactGA } from "../shared/analyticsUtils";
 
 function GameModeChoice() {
   // const [inviteCode, setInviteCode] = useState(null);
@@ -33,6 +34,11 @@ function GameModeChoice() {
   const handleClick = (mode) => {
     navigate("/CategorySelection", { state: { selectedGameMode: mode } });
   };
+
+  //Send To Google Analytics
+  useEffect(() => {
+    initializeReactGA();
+  }, []);
 
   useEffect(() => {
     const getInviteCodeFromURL = () => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-grid-system";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
@@ -35,6 +35,8 @@ import w13 from "../assets/graphics/w13.png";
 import w14 from "../assets/graphics/w14.png";
 import w15 from "../assets/graphics/w15.png";
 import backPhoto from "../assets/graphics/back.jpg";
+import ReactGA from "react-ga";
+import { initializeReactGA } from "../shared/analyticsUtils";
 
 // Store the imported image paths in an array
 const maleAvatars = [
@@ -88,6 +90,11 @@ function ProfileSetup() {
 
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
+  //Send To Google Analytics
+  useEffect(() => {
+    initializeReactGA();
+  }, []);
 
   const handlegenderSelectedChange = (event) => {
     setSelectedGender(event.target.value);

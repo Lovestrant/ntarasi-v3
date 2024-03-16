@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { Col, Container, Row } from "react-grid-system";
 import whatsappImg from "../assets/graphics/whatsapp.png";
 import backPhoto from "../assets/graphics/back.jpg";
+import { initializeReactGA } from "../shared/analyticsUtils";
 
 function SendInvite() {
   const location = useLocation();
@@ -16,6 +17,11 @@ function SendInvite() {
   const [responseData, setResponseData] = useState("");
   const [inviteCode, setInviteCode] = useState(createdInviteCode);
   const [successMessage, setSuccessMessage] = useState();
+
+  //Send To Google Analytics
+  useEffect(() => {
+    initializeReactGA();
+  }, []);
 
   const playerOneData = {
     profile: {

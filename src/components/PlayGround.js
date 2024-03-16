@@ -36,6 +36,11 @@ import b13 from "../assets/backgrounds/b13.jpg";
 import b14 from "../assets/backgrounds/b14.jpg";
 import b15 from "../assets/backgrounds/b15.jpg";
 import defaultPic from "../assets/backgrounds/default.jpg";
+import {
+  initializeReactGA,
+  startTimer,
+  trackTimeSpent,
+} from "../shared/analyticsUtils";
 
 function PlayGround() {
   const navigate = useNavigate();
@@ -73,6 +78,27 @@ function PlayGround() {
   });
   const [backgroundPhoto, setBackgroundPhoto] = useState(defaultPic);
   const chatContainerRef = useRef(null);
+
+  //Send To Google Analytics
+  useEffect(() => {
+    initializeReactGA();
+    startTimer();
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        trackTimeSpent();
+      } else {
+        startTimer();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      trackTimeSpent(); // Track time when component unmounts
+    };
+  }, []);
 
   //Increment game Category as required and assign Gifts
   useEffect(() => {

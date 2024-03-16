@@ -10,11 +10,17 @@ import betweenTheSheets2 from "../assets/backgrounds/sheets2.jpg";
 import engaged2 from "../assets/backgrounds/engaged2.jpg";
 import married from "../assets/backgrounds/bg2.jpg";
 import backPhoto from "../assets/graphics/back.jpg";
+import { initializeReactGA, selectedCategory } from "../shared/analyticsUtils";
 
 function CategorySelection() {
   const [categoryData, setCategoryData] = useState();
   const location = useLocation();
   const { selectedGameMode } = location.state;
+
+  //Send To Google Analytics
+  useEffect(() => {
+    initializeReactGA();
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,7 +42,10 @@ function CategorySelection() {
 
   const navigate = useNavigate();
 
-  const handleClick = (uid) => {
+  const handleClick = (uid, categoryTitle) => {
+    //Send Title Selected To Analytics
+    selectedCategory(categoryTitle);
+
     navigate("/profileSetup", {
       state: { selectedGameMode: selectedGameMode, uid: uid },
     });
@@ -80,7 +89,7 @@ function CategorySelection() {
                 {categoryData.details_.map((item) => (
                   <div
                     key={item.uid}
-                    onClick={() => handleClick(item.uid)}
+                    onClick={() => handleClick(item.uid, item.title)}
                     style={{
                       marginBottom: 30,
                       width: "calc(50% - 5px)", // Adjust width for two columns

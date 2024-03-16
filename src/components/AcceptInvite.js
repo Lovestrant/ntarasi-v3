@@ -36,6 +36,8 @@ import w13 from "../assets/graphics/w13.png";
 import w14 from "../assets/graphics/w14.png";
 import w15 from "../assets/graphics/w15.png";
 import { useLocation, useNavigate } from "react-router-dom";
+import ReactGA from "react-ga";
+import { initializeReactGA } from "../shared/analyticsUtils";
 
 // Store the imported image paths in an array
 const maleAvatars = [
@@ -91,6 +93,11 @@ function AcceptInvite() {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+
+  //Send To Google Analytics
+  useEffect(() => {
+    initializeReactGA();
+  }, []);
 
   const handlegenderSelectedChange = (event) => {
     setSelectedGender(event.target.value);

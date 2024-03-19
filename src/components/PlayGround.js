@@ -442,7 +442,15 @@ function PlayGround() {
   };
 
   return (
-    <div style={{ backgroundImage: `url(${backgroundPhoto})` }}>
+    <div
+      style={{
+        backgroundImage: `url(${backgroundPhoto})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        /* Optionally center the background image */
+        backgroundPosition: "center",
+      }}
+    >
       <Container>
         <Row style={{ backgroundColor: "whitesmoke", opacity: 0.8 }}>
           <Col sm={12}>
@@ -486,7 +494,7 @@ function PlayGround() {
                   }}
                   onClick={() => handleClearGame()}
                 >
-                  Quit game
+                  Exit game
                 </button>
               </div>
 

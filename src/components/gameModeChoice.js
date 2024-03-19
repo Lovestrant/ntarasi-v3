@@ -79,7 +79,7 @@ function GameModeChoice() {
               onClick={() => handleClick("offline")}
             >
               <img src={couples} alt="couples" style={imgStyle} />
-              <p style={{ color: "white" }}>PLAY WITH PARTNER OFFLINE</p>
+              <p style={{ color: "white" }}>PLAY WITH PARTNER</p>
               <p style={{ color: "white" }}>(On this Gadget)</p>
             </button>
           </Col>
@@ -89,7 +89,7 @@ function GameModeChoice() {
               onClick={() => handleClick("online")}
             >
               <img src={smartphone} alt="smartphone" style={imgStyle} />
-              <p style={{ color: "white" }}>PLAY WITH PARTNER ONLINE</p>
+              <p style={{ color: "white" }}>PLAY WITH PARTNER</p>
               <p style={{ color: "white" }}>(On separate Gadgets)</p>
             </button>
           </Col>

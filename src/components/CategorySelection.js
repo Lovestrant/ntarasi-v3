@@ -73,7 +73,7 @@ function CategorySelection() {
   };
 
   return (
-    <div style={{ backgroundImage: `url(${backPhoto})` }}>
+    <div style={{ backgroundImage: `url(${backPhoto})`, minHeight: "100vh" }}>
       <Container>
         <Row>
           <Col sm={12}>

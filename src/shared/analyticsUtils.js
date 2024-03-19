@@ -4,7 +4,7 @@ import ReactGA from "react-ga";
 let startTime = null;
 
 export const initializeReactGA = () => {
-  ReactGA.initialize("G-0X3YT2P596");
+  ReactGA.initialize("G-Y6QWVTQ87M");
   ReactGA.pageview(window.location.pathname);
 };
 
@@ -25,11 +25,11 @@ export const trackTimeSpent = () => {
 };
 
 export const selectedCategory = (categoryTitle) => {
-  if(categoryTitle) {
+  if (categoryTitle) {
     ReactGA.event({
-        category: "Game Details",
-        action: "Game Category Selected",
-        value: categoryTitle,
-      });
+      category: "Game Details",
+      action: "Game Category Selected",
+      value: categoryTitle,
+    });
   }
-}
+};

@@ -447,7 +447,6 @@ function PlayGround() {
         backgroundImage: `url(${backgroundPhoto})`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
-        /* Optionally center the background image */
         backgroundPosition: "center",
       }}
     >
@@ -480,24 +479,34 @@ function PlayGround() {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
+                  flexDirection: "row",
+                  flexWrap: "wrap",
                 }}
               >
-                <p style={{ fontWeight: "bold" }}>
-                  Level: <span style={{ color: "red" }}>{gameLevel}</span>
-                </p>
-                <p style={{ fontWeight: "bold" }}>Play Ground</p>
-                <button
-                  style={{
-                    backgroundColor: "brown",
-                    color: "white",
-                    borderRadius: 5,
-                  }}
-                  onClick={() => handleClearGame()}
-                >
-                  Exit game
-                </button>
+                {/* Level and Exit game button */}
+                <div style={{ flexGrow: 1 }}>
+                  <p style={{ fontWeight: "bold" }}>
+                    Level: <span style={{ color: "red" }}>{gameLevel}</span>
+                  </p>
+                </div>
+                <div style={{ flexGrow: 1 }}>
+                  <p style={{ fontWeight: "bold" }}>Play Ground</p>
+                </div>
+                <div style={{ flexGrow: 1 }}>
+                  <button
+                    style={{
+                      backgroundColor: "brown",
+                      color: "white",
+                      borderRadius: 5,
+                    }}
+                    onClick={() => handleClearGame()}
+                  >
+                    Exit game
+                  </button>
+                </div>
               </div>
 
+              {/* Chat container */}
               <div
                 ref={chatContainerRef}
                 style={{
@@ -508,6 +517,7 @@ function PlayGround() {
                   padding: "10px",
                 }}
               >
+                {/* Mapping viewed cards and messages */}
                 {viewedCards.map((card, outerIndex) => {
                   let foundMatch = false;
                   let message = [];
@@ -546,13 +556,7 @@ function PlayGround() {
                       >
                         <p>{card}</p>
                         {selectedGameMode === "offline" && (
-                          <span
-                            style={{
-                              textSize: 1,
-                              color: "pink",
-                              display: "flex",
-                            }}
-                          >
+                          <span style={{ color: "pink" }}>
                             Please give a verbal Response.
                           </span>
                         )}
@@ -638,91 +642,12 @@ function PlayGround() {
                       ) : (
                         <p style={{ marginLeft: "10px" }}></p>
                       )}
-                      {gifts.map((gift, giftIndex) => {
-                        if (
-                          parseInt(gift[1]) === outerIndex &&
-                          parseInt(gift[1]) !== cards.length
-                        ) {
-                          return (
-                            <div
-                              style={{
-                                margin: "5px 0px 5px 0px",
-                                float: "left",
-                                border: "2px solid #d2d2d2",
-                                textAlign: "left",
-                                padding: "7px",
-                                width: "80%",
-                                borderRadius: 10,
-                                backgroundColor: "pink",
-                              }}
-                            >
-                              <h5>
-                                List of love gifts(Pick one to be given in the
-                                next 3 days)
-                              </h5>
-                              <p>{gift[0][0]}</p>
-                              <p>{gift[0][1]}</p>
-                              <p>{gift[0][2]}</p>
-                              <p>{gift[0][3]}</p>
-                            </div>
-                          );
-                        }
-                        if (
-                          gift[1] === "finalGift" &&
-                          outerIndex + 1 === viewedCards.length
-                        ) {
-                          return (
-                            <div
-                              style={{
-                                margin: "5px 0px 5px 0px",
-                                float: "left",
-                                border: "2px solid #d2d2d2",
-                                textAlign: "left",
-                                padding: "7px",
-                                width: "80%",
-                                borderRadius: 10,
-                                backgroundColor: "pink",
-                              }}
-                            >
-                              <h5>
-                                List of love gifts(Pick one to be given in the
-                                next 3 days)
-                              </h5>
-                              <p>{gift[0][0]}</p>
-                              <p>{gift[0][1]}</p>
-                              <p>{gift[0][2]}</p>
-                              <p>{gift[0][3]}</p>
-                              <h4>
-                                Congratulations! You have completed this
-                                category of cards. To continue enjoying this
-                                game, try getting to know you, Romance and
-                                finance,coffee date category, dating category,
-                                married category or the between the sheets
-                                category
-                              </h4>
-                              <p>
-                                <button
-                                  style={{ height: "30px" }}
-                                  onClick={() => {
-                                    handleClearGame();
-                                  }}
-                                >
-                                  Select another Category
-                                </button>
-                              </p>
-                            </div>
-                          );
-                        }
-                        console.log("cards.length", cards.length);
-                        console.log("viewed.length", viewedCards.length);
-                        console.log("outerIndex", outerIndex);
-                        console.log("gift[1]", gift[1]);
-                        return null;
-                      })}
                     </div>
                   );
                 })}
               </div>
+
+              {/* Input and send button for online mode */}
               {selectedGameMode === "online" && (
                 <div style={{ marginTop: "10px", marginBottom: "10px" }}>
                   <input
@@ -752,13 +677,16 @@ function PlayGround() {
             alignItems: "center",
           }}
         >
-          <Col sm={3}>
+          {/* Player 1 Info */}
+          <Col sm={12} md={3}>
             <div
               style={{
                 backgroundColor: "whitesmoke",
                 padding: 4,
                 borderRadius: 10,
-                width: "auto",
+                width: "100%",
+                maxWidth: "300px",
+                margin: "auto",
               }}
             >
               <div>
@@ -774,13 +702,19 @@ function PlayGround() {
               />
             </div>
           </Col>
-          <Col sm={6} style={{ display: "flex", justifyContent: "center" }}>
+
+          {/* Play button or Wait message */}
+          <Col
+            sm={12}
+            md={6}
+            style={{ display: "flex", justifyContent: "center" }}
+          >
             {selectedGameMode === "online" && myTurn && (
               <button
                 style={{
                   height: 60,
                   marginTop: 20,
-                  backgroundColor: "rgb(81,180,8)",
+                  backgroundColor: "rgb(81, 180, 8)",
                   borderRadius: 10,
                   width: 100,
                 }}
@@ -797,7 +731,7 @@ function PlayGround() {
                 style={{
                   height: 60,
                   marginTop: 20,
-                  backgroundColor: "rgb(81,180,8)",
+                  backgroundColor: "rgb(81, 180, 8)",
                   borderRadius: 10,
                   width: 100,
                 }}
@@ -807,13 +741,17 @@ function PlayGround() {
               </button>
             )}
           </Col>
-          <Col sm={3}>
+
+          {/* Player 2 Info */}
+          <Col sm={12} md={3}>
             <div
               style={{
                 backgroundColor: "whitesmoke",
-                padding: 4,
+                padding: 1,
                 borderRadius: 10,
-                width: "auto",
+                width: "100%",
+                maxWidth: "300px",
+                margin: "auto",
               }}
             >
               <div>
